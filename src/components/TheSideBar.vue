@@ -96,8 +96,7 @@
 </template>
 
 <script lang="ts">
-import Vue,{ ComponentOptions } from 'vue';
-import { mapGetters, mapMutations } from 'vuex';
+import Vue from 'vue';
 
 export default Vue.extend({
   data () {

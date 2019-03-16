@@ -2,19 +2,21 @@
   <textarea :placeholder="$props.placeholder" rows="1" @keydown="autosize" ref="textarea"></textarea>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
   props: [ 'placeholder' ],
   methods: {
-    autosize (event) {
-      const elem = this.$refs.textarea;
+    autosize (event: TextEvent) {
+      const elem = this.$refs.textarea as HTMLTextAreaElement;
       setTimeout(() => {
-        elem.style.height = 0;
+        elem.style.height = '0px';
         elem.style.height = `${Math.max(14, elem.scrollHeight)}px`;
       }, 0);
     }
   },
-}
+});
 </script>
 
 <style scoped>
