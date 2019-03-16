@@ -8,14 +8,13 @@ const vueConfig = require('vue-config');
 const GAuth = require('vue-google-oauth2').default;
 
 let keys;
-let key = process.env.VUE_APP_TWITTER_KEY;
+let key = process.env.VUE_APP_TWITTER_KEY || '.';
 try {
   keys = require('../../token/auth.json');
   key = keys.twitter;
 } catch (e) {
   console.log(e);
 }
-key = key.split('.');
 
 Vue.use(Vuetify);
 Vue.use(vueConfig, {
@@ -24,8 +23,8 @@ Vue.use(vueConfig, {
   providers: {
     auth: {
       twitter: {
-        clientId: key[0],
-        clientSecret: key[1],
+        clientId: key.split('.')[0],
+        clientSecret: key.split('.')[1],
       }
     }
   },
