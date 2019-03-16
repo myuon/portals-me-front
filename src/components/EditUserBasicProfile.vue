@@ -41,8 +41,8 @@
 <script lang="ts">
 import Vue from 'vue';
 import axios from 'axios';
-import sdk from '@/app/sdk';
-import { User } from '@/views/User';
+import sdk from '../app/sdk';
+import { User } from '../views/User.vue';
 
 export default Vue.extend({
   props: [
@@ -56,7 +56,7 @@ export default Vue.extend({
         picture: this.formData.picture,
       },
       user_id_icon: 'check',
-      imageData: null,
+      imageData: null as File | null,
     };
   },
   methods: {
@@ -74,19 +74,23 @@ export default Vue.extend({
           this.user_id_icon = 'check';
         });
     },
-    async selectFiles(input: any) {
-      const url = URL.createObjectURL(input.target.files[0]);
-      this.imageData = url;
+    async selectFiles(event: Event) {
+      const files: FileList = (event.target as any).files;
+      this.imageData = files[0];
     },
     async uploadIconPicture() {
-      const presignedURL = (await sdk.article.generate_presigned_url('user', this.imageData.file.name)).data;
-      await axios.put(presignedURL, this.imageData.file, {
-        headers: { 'Content-Type': this.imageData.file.type },
+      if (!this.imageData) {
+        return;
+      }
+
+      const presignedURL = (await sdk.article.generate_presigned_url('user', this.imageData.name)).data;
+      await axios.put(presignedURL, this.imageData, {
+        headers: { 'Content-Type': this.imageData.type },
       });
 
       const user = JSON.parse(localStorage.getItem('user') as any) as User;
-      if (this.user) {
-        this.form.picture = `https://s3-ap-northeast-1.amazonaws.com/portals-me-storage-users/${encodeURIComponent(user.id)}/user/${this.imageData.file.name}`;
+      if (user) {
+        this.form.picture = `https://s3-ap-northeast-1.amazonaws.com/portals-me-storage-users/${encodeURIComponent(user.id)}/user/${this.imageData.name}`;
       } else {
         console.error('localStorage.user is null')
       }

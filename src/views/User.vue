@@ -89,14 +89,17 @@
 <script lang="ts">
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import sdk from '@/app/sdk';
-import EditUserBasicProfile from '@/components/EditUserBasicProfile.vue';
+import sdk from '../app/sdk';
+import EditUserBasicProfile from '../components/EditUserBasicProfile.vue';
 
 export interface User {
   id: string,
 }
 
 export default Vue.extend({
+  components: {
+    EditUserBasicProfile,
+  },
   data () {
     return {
       user: null as User | null,
