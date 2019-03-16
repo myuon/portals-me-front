@@ -39,9 +39,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import axios from 'axios'
-import sdk from '@/app/sdk'
+import Vue from 'vue';
+import axios from 'axios';
+import sdk from '@/app/sdk';
+import { User } from '@/views/User';
 
 export default Vue.extend({
   props: [
@@ -83,8 +84,12 @@ export default Vue.extend({
         headers: { 'Content-Type': this.imageData.file.type },
       });
 
-      const user = JSON.parse(localStorage.getItem('user') as any);
-      this.form.picture = `https://s3-ap-northeast-1.amazonaws.com/portals-me-storage-users/${encodeURIComponent(user.id)}/user/${this.imageData.file.name}`;
+      const user = JSON.parse(localStorage.getItem('user') as any) as User;
+      if (this.user) {
+        this.form.picture = `https://s3-ap-northeast-1.amazonaws.com/portals-me-storage-users/${encodeURIComponent(user.id)}/user/${this.imageData.file.name}`;
+      } else {
+        console.error('localStorage.user is null')
+      }
     },
   },
 })
