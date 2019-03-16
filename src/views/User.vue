@@ -92,10 +92,14 @@ import VueRouter from 'vue-router';
 import sdk from '@/app/sdk';
 import EditUserBasicProfile from '@/components/EditUserBasicProfile.vue';
 
+export interface User {
+  id: string,
+}
+
 export default Vue.extend({
   data () {
     return {
-      user: null,
+      user: null as User | null,
       feed: [],
       me: [],
       editDialog: false,
@@ -107,7 +111,9 @@ export default Vue.extend({
       await sdk.user.follow(userName);
     },
     async updateUserProfile (form: any) {
-      await sdk.user.update(this.user.id.split('user##ap-northeast-1:')[1], form);
+      if (this.user) {
+        await sdk.user.update(this.user.id.split('user##ap-northeast-1:')[1], form);
+      }
     }
   },
   mounted: async function() {
