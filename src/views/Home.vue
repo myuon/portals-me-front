@@ -110,7 +110,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
-import sdk from '@/app/sdk';
+import sdk from '../app/sdk';
 
 export interface Collection {
   comment_count: number,
