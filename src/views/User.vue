@@ -1,7 +1,10 @@
 <template>
   <v-container>
     <v-layout justify-center>
-      <v-flex xs8>
+      <v-flex
+        xs8
+        v-if="user != null"
+      >
         <v-avatar
           size="120"
           color="grey lighten-4"
