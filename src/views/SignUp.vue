@@ -50,11 +50,14 @@
   </v-layout>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 import axios from 'axios';
-import sdk from '@/app/sdk';
+import sdk from '../app/sdk';
+import { User } from './User.vue';
 
-export default {
+export default Vue.extend({
   props: [ 'signup' ],
   data () {
     return {
@@ -69,13 +72,13 @@ export default {
     };
   },
   methods: {
-    async toDashboard ({ id_token, user }) {
+    async toDashboard ({ id_token, user }: { id_token: string, user: User }) {
       localStorage.setItem('id_token', id_token);
       localStorage.setItem('user', JSON.stringify(user));
       this.$router.push('/dashboard');
     },
     async signUpWithGoogle () {
-      const user = await this.$gAuth.signIn();
+      const user = await (this as any).$gAuth.signIn();
       const profile = user.getBasicProfile();
 
       this.form = {
@@ -93,7 +96,7 @@ export default {
       const twitterAuthURL = await axios.post(`${process.env.VUE_APP_API_ENDPOINT}/auth/twitter`);
       location.href = twitterAuthURL.data;
     },
-    async signUpWithTwitterAfter (token) {
+    async signUpWithTwitterAfter (token: { oauth_token: string, oauth_verifier: string }) {
       const result = (await axios.get(`${process.env.VUE_APP_API_ENDPOINT}/auth/twitter?oauth_token=${token.oauth_token}&oauth_verifier=${token.oauth_verifier}`)).data;
       const account = result.account;
       console.log(account)
@@ -129,9 +132,9 @@ export default {
     // twitter-callback
     // Continue to signUpWithTwitter
     if (this.$route.path.startsWith('/signup/twitter-callback')) {
-      this.signUpWithTwitterAfter(this.$route.query);
+      this.signUpWithTwitterAfter(this.$route.query as { oauth_token: string, oauth_verifier: string });
     }
-},
-}
+  },
+})
 </script>
 
