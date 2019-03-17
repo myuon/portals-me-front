@@ -44,5 +44,3 @@ workflows:
       - deploy:
           requires:
             - approval
-          requires:
-            - approval
