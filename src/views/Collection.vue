@@ -382,13 +382,15 @@
   </v-container>
 </template>
 
-<script>
-import AutogrowTextarea from '@/components/AutogrowTextarea';
+<script lang="ts">
+import Vue from 'vue';
+import AutogrowTextarea from '../components/AutogrowTextarea.vue';
 import fetchJsonp from 'fetch-jsonp';
-import sdk from '@/app/sdk';
+import sdk from '../app/sdk';
 import axios from 'axios';
+import { User } from './User.vue';
 
-export default {
+export default Vue.extend({
   data () {
     return {
       activeTabInCreateArticleDialog: null,
@@ -404,16 +406,16 @@ export default {
       },
       collection: {},
       deleteDialog: null,
-      articles: [],
-      activeArticle: {},
-      imageData: [],
+      articles: [] as { entity: { url: string, type: string } }[],
+      activeArticle: {} as { entity: { url: string, type: string } },
+      imageData: [] as { src: string, file: File }[],
     };
   },
   components: {
     SheetFooter: {
       functional: true,
 
-      render (h, { children }) {
+      render (h: any, { children }: any) {
         return h('v-sheet', {
           staticClass: 'mt-auto align-center justify-center d-flex',
           props: {
@@ -427,24 +429,24 @@ export default {
     AutogrowTextarea,
   },
   methods: {
-    selectFiles (input) {
-      Array.from(input.target.files).forEach((file, index) => {
+    selectFiles (input: any) {
+      Array.from(input.target.files).forEach((file: any, index) => {
         const url = URL.createObjectURL(file);
         this.imageData.push({ src: url, file: file });
       });
     },
-    clickArticleCard (index) {
+    clickArticleCard (index: number) {
       this.articleDialog = true;
       this.activeArticle = this.articles[index];
 
       if (this.activeArticle.entity.type === 'share') {
-        this.previewOEmbed(this.$refs.articleDialog, this.activeArticle.entity.url);
+        this.previewOEmbed(this.$refs.articleDialog as HTMLElement, this.activeArticle.entity.url);
       } else {
-        this.$refs.articleDialog.innerHTML = ``;
+        (this.$refs.articleDialog as HTMLElement).innerHTML = '';
       }
     },
-    async previewOEmbed (elem, url_raw) {
-      const getProvider = (url) => {
+    async previewOEmbed (elem: HTMLElement, url_raw: string) {
+      const getProvider = (url: string) => {
         if (/https:\/\/twitter\.com\/.*\/status\/.*/.test(url)) {
           return `https://publish.twitter.com/oembed?format=json&url=${encodeURIComponent(url)}`
         }
@@ -460,10 +462,10 @@ export default {
       const response = await fetchJsonp(url);
       const card_json = await response.json();
 
-      const replaceHTML = (element, html) => {
+      const replaceHTML = (element: any, html: string) => {
         element.innerHTML = html;
-        element.querySelectorAll('script').forEach(scriptElement => {
-          const se = document.createElement('script');
+        element.querySelectorAll('script').forEach((scriptElement: any) => {
+          const se: HTMLScriptElement = document.createElement('script');
           se.src = scriptElement.src;
           scriptElement.replaceWith(se);
         });
@@ -477,7 +479,7 @@ export default {
       this.articles = result;
     },
     async submit () {
-      if (this.$refs.createArticleForm.validate()) {
+      if ((this.$refs.createArticleForm as any).validate()) {
         await this.postArticle();
       }
     },
@@ -490,7 +492,7 @@ export default {
           headers: { 'Content-Type': this.imageData[0].file.type },
         });
 
-        const user = JSON.parse(localStorage.getItem('user'));
+        const user = JSON.parse(localStorage.getItem('user') || "") as User;
         await sdk.article.create(collectionId, {
           title: this.createArticleForm.title,
           description: this.createArticleForm.description,
@@ -533,7 +535,7 @@ export default {
       this.loadArticles(),
     ]);
   },
-}
+})
 </script>
 
 <style scoped>

@@ -1,7 +1,10 @@
 <template>
   <v-container>
     <v-layout justify-center>
-      <v-flex xs8>
+      <v-flex
+        xs8
+        v-if="user != null"
+      >
         <v-avatar
           size="120"
           color="grey lighten-4"
@@ -87,33 +90,39 @@
 </template>
 
 <script lang="ts">
-import Vue,{ ComponentOptions } from 'vue';
-import { Component } from 'vue-property-decorator';
+import Vue from 'vue';
 import VueRouter from 'vue-router';
-import sdk from '@/app/sdk';
-import EditUserBasicProfile from '@/components/EditUserBasicProfile.vue';
+import sdk from '../app/sdk';
+import EditUserBasicProfile from '../components/EditUserBasicProfile.vue';
 
-@Component({
+export interface User {
+  id: string,
+}
+
+export default Vue.extend({
   components: {
     EditUserBasicProfile,
-  }
-})
-export default class User extends Vue {
-  user: any = null;
-  feed: Array<any> = [];
-  me: object = {};
-  editDialog = false;
-
-  async follow () {
-    const userName = this.$route.params.userId;
-    await sdk.user.follow(userName);
-  }
-
-  async updateUserProfile (form: any) {
-    await sdk.user.update(this.user.id.split('user##ap-northeast-1:')[1], form);
-  }
-
-  async mounted () {
+  },
+  data () {
+    return {
+      user: null as User | null,
+      feed: [],
+      me: [],
+      editDialog: false,
+    }
+  },
+  methods: {
+    async follow () {
+      const userName = this.$route.params.userId;
+      await sdk.user.follow(userName);
+    },
+    async updateUserProfile (form: any) {
+      if (this.user) {
+        await sdk.user.update(this.user.id.split('user##ap-northeast-1:')[1], form);
+      }
+    }
+  },
+  mounted: async function() {
     await Promise.all([
       (async () => {
         const userName = this.$route.params.userId;
@@ -132,5 +141,5 @@ export default class User extends Vue {
     } catch (e) {
     }
   }
-}
+})
 </script>

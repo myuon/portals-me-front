@@ -47,11 +47,14 @@
   </v-toolbar>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+import { User } from '../views/User.vue';
+
+export default Vue.extend({
   data () {
     return {
-      user: null,
+      user: null as User | null,
     };
   },
   methods: {
@@ -67,13 +70,13 @@ export default {
   },
   async mounted () {
     try {
-      this.user = JSON.parse(localStorage.getItem('user'));
+      this.user = JSON.parse(localStorage.getItem('user') || '');
     } catch (e) {
       console.error(e);
-      this.user = {};
+      this.user = null;
     }
 
-    const needAuth = (str) => str.match(
+    const needAuth = (str: string) => str.match(
       /^\/collections\/(.*)/
     );
 
@@ -81,5 +84,5 @@ export default {
       this.$router.push('/');
     }
   },
-}
+})
 </script>

@@ -107,49 +107,64 @@
 </template>
 
 <script lang="ts">
-import Vue,{ ComponentOptions } from 'vue';
-import { Component } from 'vue-property-decorator';
+import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
-import * as types from '@/types';
-import sdk from '@/app/sdk';
+import sdk from '../app/sdk';
 
-@Component({
-})
-export default class Home extends Vue {
-  dialog = false;
-  form = {
-    title: '',
-    description: '',
-    cover: {
-      color: 'teal darken-2',
-      sort: 'solid',
+export interface Collection {
+  comment_count: number,
+  comment_members: Array<string>,
+  cover: Map<string, string>,
+  created_at: number,
+  description: string,
+  id: string,
+  media: Map<string, string>,
+  owner: string,
+  title: string,
+}
+
+export default Vue.extend({
+  data () {
+    return {
+      dialog: false,
+      form: {
+        title: '',
+        description: '',
+        cover: {
+          color: 'teal darken-2',
+          sort: 'solid',
+        }
+      },
+      timeline: [],
     }
-  };
-  timeline = [];
+  },
 
-  public get collections (): Array<types.Collection> {
-    return this.$store.state.collections || [];
-  }
+  computed: {
+    collections (): Collection[] {
+      return this.$store.state.collections || [];
+    }
+  },
 
-  async createProject () {
-    await sdk.collection.create({
-      title: this.form.title,
-      description: this.form.description,
-      cover: this.form.cover,
-    });
+  methods: {
+    async createProject () {
+      await sdk.collection.create({
+        title: this.form.title,
+        description: this.form.description,
+        cover: this.form.cover,
+      });
 
-    this.dialog = false;
-    await this.$store.dispatch('loadCollections', {
-      force: true,
-    });
-  }
-
-  async loadTimeline () {
-    const result = await sdk.timeline.get();
-    console.log(result);
-    this.timeline = result.data;
-  }
+      this.dialog = false;
+      await this.$store.dispatch('loadCollections', {
+        force: true,
+      });
+    },
+    async loadTimeline () {
+      const result = await sdk.timeline.get();
+      console.log(result);
+      this.timeline = result.data;
+    }
+  },
 
   async mounted () {
     await Promise.all([
@@ -157,5 +172,5 @@ export default class Home extends Vue {
       this.loadTimeline(),
     ])
   }
-}
+})
 </script>

@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Vuex, { MutationTree, GetterTree, ActionTree } from 'vuex';
-import * as types from '@/types';
+import { Collection } from '@/views/Home.vue';
 import sdk from '@/app/sdk';
 
 Vue.use(Vuex);
 
 interface State {
   isDrawerOpened: boolean,
-  collections: Array<types.Collection> | null,
+  collections: Array<Collection> | null,
   collectionsForceReload: boolean,
 }
 
@@ -27,7 +27,7 @@ const mutations: MutationTree<State> = {
   toggleDrawer (state) {
     state.isDrawerOpened = !state.isDrawerOpened
   },
-  setCollections (state, collections: Array<types.Collection>) {
+  setCollections (state, collections: Array<Collection>) {
     state.collections = collections;
   },
   markCollectionsReload (state) {

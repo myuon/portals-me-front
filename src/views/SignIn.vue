@@ -20,11 +20,13 @@
   </v-layout>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import axios from 'axios';
-import sdk from '@/app/sdk';
+import sdk from '../app/sdk';
+import { User } from './User.vue';
 
-export default {
+export default Vue.extend({
   props: [ 'signin' ],
   data () {
     return {
@@ -33,13 +35,13 @@ export default {
   },
   methods: {
     async signInWithGoogle () {
-      const user = await this.$gAuth.signIn();
+      const user = await (this as any).$gAuth.signIn();
 
       try {
         const result = (await sdk.signIn({
           google: user.getAuthResponse().id_token
         })).data;
-        await this.signIn(result);
+        await this.toDashboard(result);
       } catch (err) {
         this.signInError = err.response.data;
         return;
@@ -51,7 +53,7 @@ export default {
 
       // Jump to mounted.twitter-callback
     },
-    async signInWithTwitterAfter (token) {
+    async signInWithTwitterAfter (token: { oauth_token: string, oauth_verifier: string }) {
       try {
         const credential = (await axios.get(`${process.env.VUE_APP_API_ENDPOINT}/auth/twitter?oauth_token=${token.oauth_token}&oauth_verifier=${token.oauth_verifier}`)).data.credential;
         const result = (await sdk.signIn({
@@ -64,7 +66,7 @@ export default {
         return;
       }
     },
-    async toDashboard ({ id_token, user }) {
+    async toDashboard ({ id_token, user }: { id_token: string, user: User }) {
       localStorage.setItem('id_token', id_token);
       localStorage.setItem('user', JSON.stringify(user));
       this.$router.push('/dashboard');
@@ -74,9 +76,9 @@ export default {
     // twitter-callback
     // Continue to signInWithTwitter
     if (this.$route.path.startsWith('/signin/twitter-callback')) {
-      this.signInWithTwitterAfter(this.$route.query);
+      this.signInWithTwitterAfter(this.$route.query as { oauth_token: string, oauth_verifier: string });
     }
   },
-}
+})
 </script>
 

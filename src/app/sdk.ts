@@ -70,7 +70,7 @@ export default {
         { headers: { Authorization: `Bearer ${getToken()}` } }
       );
     },
-    generate_presigned_url: async (collectionId: string, key: object) => {
+    generate_presigned_url: async (collectionId: string, key: any) => {
       return await axios.post(
         `${url}/collections/${collectionId}/articles-presigned`,
         key,

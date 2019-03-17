@@ -11,8 +11,3 @@
   </v-toolbar>
 </template>
 
-<script>
-export default {
-}
-</script>
-
