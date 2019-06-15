@@ -12,6 +12,7 @@ import Collection from '@/views/Collection.vue';
 import SignIn from '@/views/SignIn.vue';
 import SignUp from '@/views/SignUp.vue';
 import User from '@/views/User.vue';
+import PasswordForm from '@/views/PasswordForm.vue';
 
 Vue.use(Router)
 
@@ -50,6 +51,14 @@ export default new Router({
         default: SignIn,
         topbar: UnsignedTopBar,
       },
+    },
+    {
+      path: '/signin-password',
+      name: 'signin-password',
+      components: {
+        default: PasswordForm,
+        topbar: UnsignedTopBar,
+      }
     },
     {
       path: '/signin/twitter-callback',
