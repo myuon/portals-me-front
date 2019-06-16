@@ -170,6 +170,9 @@ import VueRouter from "vue-router";
 import Vuex from "vuex";
 import sdk from "../app/sdk";
 import * as queries from "../graphql/queries";
+import * as mutations from "../graphql/mutations";
+import { API, graphqlOperation } from "aws-amplify";
+import { GraphQLResult } from "@aws-amplify/api/lib/types";
 
 export interface Collection {
   comment_count: number;
@@ -195,7 +198,8 @@ export default Vue.extend({
           sort: "solid"
         }
       },
-      timeline: []
+      timeline: [],
+      user: null
     };
   },
 
@@ -205,23 +209,26 @@ export default Vue.extend({
     },
     listCollectionsQuery(): Collection[] {
       return this.$Amplify.graphqlOperation(queries.listCollectionsByOwner, {
-        owner: "00000000-0000-0000-0000-000000000000"
+        owner: this.user ? this.user.id : ""
       });
     }
   },
 
   methods: {
     async createProject() {
-      await sdk.collection.create({
-        title: this.form.title,
-        description: this.form.description,
-        cover: this.form.cover
-      });
+      const result = (await API.graphql(
+        graphqlOperation(mutations.addCollection, {
+          owner: this.user.id,
+          name: this.form.title,
+          title: this.form.title,
+          description: this.form.description
+        })
+      )) as GraphQLResult;
+      if (result.errors.length > 0) {
+        console.error(result);
+      }
 
       this.dialog = false;
-      await this.$store.dispatch("loadCollections", {
-        force: true
-      });
     },
     async loadTimeline() {
       const result = await sdk.timeline.get();
@@ -235,6 +242,8 @@ export default Vue.extend({
       //      this.$store.dispatch("loadCollections"),
       //      this.loadTimeline()
     ]);
+
+    this.user = JSON.parse(localStorage.getItem("user") as string);
   }
 });
 </script>

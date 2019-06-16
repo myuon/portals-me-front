@@ -38,6 +38,18 @@ Vue.use(GAuth, {
 });
 
 Amplify.configure(awsconfig);
+Amplify.configure({
+  API: {
+    graphql_headers: async () => {
+      const token = localStorage.getItem('id_token');
+
+      return {
+        'Authorization': `Bearer ${token}`
+      };
+    }
+  }
+});
+
 Vue.use(AmplifyPlugin, AmplifyModules);
 
 new Vue({
