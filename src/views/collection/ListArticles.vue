@@ -14,7 +14,7 @@
       </v-hover>
     </v-layout>
 
-    <v-dialog v-model="articleDialog" max-width="600">
+    <v-dialog v-model="dialog" max-width="600">
       <v-card class="text-sm-left">
         <v-card-title class="headline" v-if="activeArticle.id">{{ activeArticle.title }}</v-card-title>
 
@@ -38,6 +38,14 @@
 
 <script lang="ts">
 import Vue from "vue";
-export default Vue.extend({});
+export default Vue.extend({
+  data() {
+    return {
+      articles: [],
+      activeArticle: {},
+      dialog: null
+    };
+  }
+});
 </script>
 

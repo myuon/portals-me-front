@@ -64,17 +64,9 @@ import * as queries from "../../src/graphql/queries";
 export default Vue.extend({
   data() {
     return {
-      activeTabInCreateArticleDialog: null,
       articleDialog: false,
       createArticleDialog: false,
       createArticleDialogTab: null,
-      createArticleForm: {
-        valid: true,
-        url: "",
-        checkbox: false,
-        title: "",
-        description: ""
-      },
       collection: {},
       deleteDialog: null,
       articles: [] as { entity: { url: string; type: string } }[],

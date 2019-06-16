@@ -108,8 +108,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from "vue";
+import AutogrowTextarea from "../../components/AutogrowTextarea.vue";
+
 export default Vue.extend({
-  
-})
+  components: {
+    AutogrowTextarea
+  }
+});
 </script>
