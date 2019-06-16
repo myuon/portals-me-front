@@ -39,8 +39,14 @@ export default Vue.extend({
           })
         }
       );
+      const token = await result.text();
 
-      console.log(await result.text());
+      localStorage.setItem("id_token", token);
+      localStorage.setItem(
+        "user",
+        atob(JSON.parse(atob(token.split(".")[1])).data)
+      );
+      this.$router.push("/dashboard");
     }
   }
 });
