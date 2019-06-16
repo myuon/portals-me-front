@@ -7,7 +7,7 @@ import TopBar from '@/components/TheTopBar.vue';
 import EditUserBasicProfile from '@/components/EditUserBasicProfile.vue';
 
 import Landing from '@/views/Landing.vue';
-import Home from '@/views/Home.vue'
+import Dashboard from '@/views/Dashboard.vue'
 import Collection from '@/views/Collection.vue';
 import SignIn from '@/views/SignIn.vue';
 import SignUp from '@/views/SignUp.vue';
@@ -72,7 +72,7 @@ export default new Router({
       path: '/dashboard',
       name: 'home',
       components: {
-        default: Home,
+        default: Dashboard,
         sidebar: SideBar,
         topbar: TopBar,
       },
