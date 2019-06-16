@@ -1,43 +1,51 @@
 <template>
-  <v-container grid-list-md fluid>
-    <v-flex xs12 class="collection-title">
-      <v-layout row wrap class="text-sm-left">
-        <v-flex xs5>
-          <h2>
-            <v-icon>collections</v-icon>
-            {{ collection.owner_name }} / {{ collection.title }}
-          </h2>
-          <pre>{{ collection.description }}</pre>
-        </v-flex>
+  <amplify-connect :query="getCollectionQuery">
+    <template slot-scope="{loading, data, errors}">
+      <div v-if="loading">Loading...</div>
+      <div v-else-if="errors.length > 0">{{ errors }}</div>
+      <div v-else-if="data">
+        <v-container grid-list-md fluid>
+          <v-flex xs12 class="collection-title">
+            <v-layout row wrap class="text-sm-left">
+              <v-flex xs5>
+                <h2>
+                  <v-icon>collections</v-icon>
+                  {{ data.getCollection.owner }} / {{ data.getCollection.title }}
+                </h2>
+                <pre>{{ data.getCollection.description }}</pre>
+              </v-flex>
 
-        <v-spacer/>
+              <v-spacer/>
 
-        <add-article/>
-      </v-layout>
-    </v-flex>
+              <add-article/>
+            </v-layout>
+          </v-flex>
 
-    <v-tabs class="collection-tab">
-      <v-tab>
-        <v-icon>layers</v-icon>作品
-      </v-tab>
-      <v-tab>
-        <v-icon>chat</v-icon>チャンネル
-      </v-tab>
-      <v-tab>
-        <v-icon>settings</v-icon>設定
-      </v-tab>
+          <v-tabs class="collection-tab">
+            <v-tab>
+              <v-icon>layers</v-icon>作品
+            </v-tab>
+            <v-tab>
+              <v-icon>chat</v-icon>チャンネル
+            </v-tab>
+            <v-tab>
+              <v-icon>settings</v-icon>設定
+            </v-tab>
 
-      <v-tab-item class="collection-layout">
-        <list-articles/>
-      </v-tab-item>
-      <v-tab-item>
-        <channel/>
-      </v-tab-item>
-      <v-tab-item>
-        <settings/>
-      </v-tab-item>
-    </v-tabs>
-  </v-container>
+            <v-tab-item class="collection-layout">
+              <list-articles/>
+            </v-tab-item>
+            <v-tab-item>
+              <channel/>
+            </v-tab-item>
+            <v-tab-item>
+              <settings/>
+            </v-tab-item>
+          </v-tabs>
+        </v-container>
+      </div>
+    </template>
+  </amplify-connect>
 </template>
 
 <script lang="ts">
@@ -51,6 +59,7 @@ import AddArticle from "./collection/AddArticle.vue";
 import ListArticles from "./collection/ListArticles.vue";
 import Channel from "./collection/Channel.vue";
 import Settings from "./collection/Settings.vue";
+import * as queries from "../../src/graphql/queries";
 
 export default Vue.extend({
   data() {
@@ -98,6 +107,15 @@ export default Vue.extend({
     Channel,
     Settings
   },
+
+  computed: {
+    getCollectionQuery() {
+      return this.$Amplify.graphqlOperation(queries.getCollection, {
+        id: this.$route.params.collectionId
+      });
+    }
+  },
+
   methods: {
     selectFiles(input: any) {
       Array.from(input.target.files).forEach((file: any, index) => {
@@ -210,7 +228,7 @@ export default Vue.extend({
     }
   },
   async mounted() {
-    await Promise.all([this.loadCollection(), this.loadArticles()]);
+    //    await Promise.all([this.loadCollection(), this.loadArticles()]);
   }
 });
 </script>
