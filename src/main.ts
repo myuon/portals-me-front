@@ -4,6 +4,9 @@ import 'vuetify/dist/vuetify.min.css'
 import router from './router'
 import App from './App.vue'
 import store from '@/store'
+import Amplify, * as AmplifyModules from 'aws-amplify'
+import { AmplifyPlugin } from 'aws-amplify-vue'
+import awsconfig from './aws-exports'
 const vueConfig = require('vue-config');
 const GAuth = require('vue-google-oauth2').default;
 
@@ -32,7 +35,10 @@ Vue.use(vueConfig, {
 
 Vue.use(GAuth, {
   clientId: (keys && keys.google) || process.env.VUE_APP_GOOGLE_KEY,
-})
+});
+
+Amplify.configure(awsconfig);
+Vue.use(AmplifyPlugin, AmplifyModules);
 
 new Vue({
   router,
