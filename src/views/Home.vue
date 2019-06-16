@@ -30,64 +30,6 @@
 
       <v-divider :key="'div-' + index"/>
     </template>
-
-    <v-subheader>コレクション</v-subheader>
-
-    <v-container grid-list-md>
-      <v-layout row wrap>
-        <v-flex xs3>
-          <v-btn
-            @click="dialog = true"
-            block
-            outline
-            color="indigo"
-            style="margin: 0; height: 100%; min-height: 200px"
-          >
-            <v-icon left>add</v-icon>コレクションを作成
-          </v-btn>
-
-          <v-dialog max-width="800" v-model="dialog">
-            <v-card>
-              <v-card-title class="headline">コレクションを作成</v-card-title>
-
-              <v-card-text>
-                <v-form>
-                  <v-text-field label="タイトル" v-model="form.title" required/>
-                  <v-textarea label="説明" v-model="form.description" rows="1" auto-grow/>
-                </v-form>
-              </v-card-text>
-
-              <v-card-actions>
-                <v-btn color="success" @click="createProject">Submit</v-btn>
-
-                <v-btn flat>Cancel</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-flex>
-
-        <v-flex xs3 v-for="collection in collections" :key="collection.id">
-          <v-card>
-            <v-img aspect-ratio="2.75" :class="collection.cover.color"></v-img>
-
-            <v-card-title>
-              <div>
-                <h3 class="headline mb-0">{{ collection.title }}</h3>
-                <div>{{ collection.description }}</div>
-              </div>
-            </v-card-title>
-
-            <v-card-actions>
-              <v-btn flat color="indigo" @click="$router.push(`/collections/${collection.id}`)">Open</v-btn>
-              <v-spacer></v-spacer>
-              <v-icon v-if="collection.media && collection.media.includes('document')">edit</v-icon>
-              <v-icon v-if="collection.media && collection.media.includes('picture')">brush</v-icon>
-              <v-icon v-if="collection.media && collection.media.includes('movie')">movie</v-icon>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container>
     -->
 
     <v-subheader>コレクション</v-subheader>
@@ -108,23 +50,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Vuex from "vuex";
-import sdk from "../app/sdk";
-import * as queries from "../graphql/queries";
-import * as mutations from "../graphql/mutations";
 import CreateCollection from "./dashboard/CreateCollection.vue";
 import ListCollections from "./dashboard/ListCollections.vue";
-
-export interface Collection {
-  comment_count: number;
-  comment_members: Array<string>;
-  cover: Map<string, string>;
-  created_at: number;
-  description: string;
-  id: string;
-  media: Map<string, string>;
-  owner: string;
-  title: string;
-}
 
 export default Vue.extend({
   components: {
@@ -134,64 +61,19 @@ export default Vue.extend({
 
   data() {
     return {
-      addCollectionVariables: null,
-      dialog: false,
-      form: {
-        title: "",
-        description: "",
-        cover: {
-          color: "teal darken-2",
-          sort: "solid"
-        }
-      },
       timeline: [],
       user: JSON.parse(localStorage.getItem("user") as string)
     };
   },
 
-  computed: {
-    collections(): Collection[] {
-      return this.$store.state.collections || [];
-    },
-    listCollectionsQuery() {
-      if (!this.user) {
-        this.loadUser();
-      }
-
-      return this.$Amplify.graphqlOperation(queries.listCollections, {
-        owner: this.user.id
-      });
-    },
-    addCollectionMutation() {
-      if (!this.user) {
-        this.loadUser();
-      }
-
-      return this.$Amplify.graphqlOperation(
-        mutations.addCollection,
-        Object.assign(this.addCollectionVariables, {
-          owner: this.user.id
-        })
-      );
-    }
-  },
-
   methods: {
     async loadTimeline() {
+      /*
       const result = await sdk.timeline.get();
       console.log(result);
       this.timeline = result.data;
-    },
-    loadUser() {
-      this.user = JSON.parse(localStorage.getItem("user") as string);
+      */
     }
-  },
-
-  async mounted() {
-    await Promise.all([
-      //      this.$store.dispatch("loadCollections"),
-      //      this.loadTimeline()
-    ]);
   }
 });
 </script>
