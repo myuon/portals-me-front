@@ -132,9 +132,12 @@
             <div v-else-if="errors.length > 0">Error!</div>
 
             <div v-else-if="data">
-              <v-flex xs3 v-for="collection in data.items" :key="collection.id">
+              <v-flex xs3 v-for="collection in data.listCollections" :key="collection.id">
                 <v-card>
-                  <v-img aspect-ratio="2.75" :class="collection.cover.color"></v-img>
+                  <v-img
+                    aspect-ratio="2.75"
+                    :class="collection.cover ? collection.cover.color : 'teal darken-2'"
+                  ></v-img>
 
                   <v-card-title>
                     <div>
@@ -208,8 +211,12 @@ export default Vue.extend({
       return this.$store.state.collections || [];
     },
     listCollectionsQuery(): Collection[] {
-      return this.$Amplify.graphqlOperation(queries.listCollectionsByOwner, {
-        owner: this.user ? this.user.id : ""
+      if (!this.user) {
+        this.loadUser();
+      }
+
+      return this.$Amplify.graphqlOperation(queries.listCollections, {
+        owner: this.user.id
       });
     }
   },
@@ -234,6 +241,9 @@ export default Vue.extend({
       const result = await sdk.timeline.get();
       console.log(result);
       this.timeline = result.data;
+    },
+    loadUser() {
+      this.user = JSON.parse(localStorage.getItem("user") as string);
     }
   },
 
@@ -242,8 +252,6 @@ export default Vue.extend({
       //      this.$store.dispatch("loadCollections"),
       //      this.loadTimeline()
     ]);
-
-    this.user = JSON.parse(localStorage.getItem("user") as string);
   }
 });
 </script>

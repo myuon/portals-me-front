@@ -13,8 +13,8 @@ export const getCollection = `query GetCollection($id: ID!) {
   }
 }
 `;
-export const listCollectionsByOwner = `query ListCollectionsByOwner($owner: String!) {
-  listCollectionsByOwner(owner: $owner) {
+export const listCollections = `query ListCollections($owner: String!) {
+  listCollections(owner: $owner) {
     id
     owner
     name

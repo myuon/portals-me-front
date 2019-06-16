@@ -74,12 +74,12 @@ export type GetCollectionQuery = {
   } | null,
 };
 
-export type ListCollectionsByOwnerQueryVariables = {
+export type ListCollectionsQueryVariables = {
   owner: string,
 };
 
-export type ListCollectionsByOwnerQuery = {
-  listCollectionsByOwner:  Array< {
+export type ListCollectionsQuery = {
+  listCollections:  Array< {
     __typename: "Collection",
     id: string,
     owner: string,
