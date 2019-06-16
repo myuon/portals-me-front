@@ -1,34 +1,32 @@
 <template>
-  <v-flex xs3>
-    <v-btn
-      @click="dialog = true"
-      block
-      outline
-      color="indigo"
-      style="margin: 0; height: 100%; min-height: 200px"
-    >
-      <v-icon left>add</v-icon>コレクションを作成
-    </v-btn>
+  <amplify-connect :mutation="addCollectionMutation">
+    <template slot-scope="{loading, mutate, errors}">
+      <v-btn @click="dialog = true" block outline color="indigo">
+        <v-icon left>add</v-icon>コレクションを作成
+      </v-btn>
 
-    <v-dialog max-width="800" v-model="dialog">
-      <v-card>
-        <v-card-title class="headline">コレクションを作成</v-card-title>
+      <v-dialog max-width="800" v-model="dialog">
+        <v-card>
+          <v-card-title class="headline">コレクションを作成</v-card-title>
 
-        <v-card-text>
-          <v-form>
-            <v-text-field label="タイトル" v-model="form.title" required/>
-            <v-textarea label="説明" v-model="form.description" rows="1" auto-grow/>
-          </v-form>
-        </v-card-text>
+          <v-card-text>
+            <template v-if="errors.length > 0">{{ errors }}</template>
 
-        <v-card-actions>
-          <v-btn color="success" @click="createProject">Submit</v-btn>
+            <v-form>
+              <v-text-field label="タイトル" v-model="form.title" required/>
+              <v-textarea label="説明" v-model="form.description" rows="1" auto-grow/>
+            </v-form>
+          </v-card-text>
 
-          <v-btn flat>Cancel</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-flex>
+          <v-card-actions>
+            <v-btn :disabled="loading" color="success" @click="mutate">Submit</v-btn>
+
+            <v-btn flat>Cancel</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </template>
+  </amplify-connect>
 </template>
 
 <script lang="ts">
@@ -38,6 +36,8 @@ import { GraphQLResult } from "@aws-amplify/api/lib/types";
 import * as mutations from "../../graphql/mutations";
 
 export default Vue.extend({
+  props: ["user"],
+
   data() {
     return {
       dialog: false,
@@ -46,6 +46,17 @@ export default Vue.extend({
         description: ""
       }
     };
+  },
+
+  computed: {
+    addCollectionMutation() {
+      return this.$Amplify.graphqlOperation(mutations.addCollection, {
+        owner: this.user.id,
+        name: this.form.title,
+        title: this.form.title,
+        description: this.form.description
+      });
+    }
   },
 
   methods: {

@@ -94,20 +94,12 @@
 
     <v-container grid-list-md>
       <v-layout row wrap>
-        <create-collection/>
-
-        <amplify-connect :query="listCollectionsQuery">
-          <template slot-scope="{loading, data, errors}">
-            <div v-if="loading">Loading...</div>
-
-            <div v-else-if="errors.length > 0">Error!</div>
-
-            <div v-else-if="data">
-              <list-collections :collections="data.listCollections"/>
-            </div>
-          </template>
-        </amplify-connect>
+        <v-flex xs3>
+          <create-collection :user="user"/>
+        </v-flex>
       </v-layout>
+
+      <list-collections :user="user"/>
     </v-container>
   </v-flex>
 </template>
@@ -118,6 +110,7 @@ import VueRouter from "vue-router";
 import Vuex from "vuex";
 import sdk from "../app/sdk";
 import * as queries from "../graphql/queries";
+import * as mutations from "../graphql/mutations";
 import CreateCollection from "./dashboard/CreateCollection.vue";
 import ListCollections from "./dashboard/ListCollections.vue";
 
@@ -141,6 +134,7 @@ export default Vue.extend({
 
   data() {
     return {
+      addCollectionVariables: null,
       dialog: false,
       form: {
         title: "",
@@ -151,7 +145,7 @@ export default Vue.extend({
         }
       },
       timeline: [],
-      user: null
+      user: JSON.parse(localStorage.getItem("user") as string)
     };
   },
 
@@ -159,7 +153,7 @@ export default Vue.extend({
     collections(): Collection[] {
       return this.$store.state.collections || [];
     },
-    listCollectionsQuery(): Collection[] {
+    listCollectionsQuery() {
       if (!this.user) {
         this.loadUser();
       }
@@ -167,6 +161,18 @@ export default Vue.extend({
       return this.$Amplify.graphqlOperation(queries.listCollections, {
         owner: this.user.id
       });
+    },
+    addCollectionMutation() {
+      if (!this.user) {
+        this.loadUser();
+      }
+
+      return this.$Amplify.graphqlOperation(
+        mutations.addCollection,
+        Object.assign(this.addCollectionVariables, {
+          owner: this.user.id
+        })
+      );
     }
   },
 
