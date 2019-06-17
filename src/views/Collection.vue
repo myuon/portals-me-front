@@ -17,7 +17,7 @@
 
               <v-spacer/>
 
-              <add-article/>
+              <add-article :user="user"/>
             </v-layout>
           </v-flex>
 
@@ -71,7 +71,8 @@ export default Vue.extend({
       deleteDialog: null,
       articles: [] as { entity: { url: string; type: string } }[],
       activeArticle: {} as { entity: { url: string; type: string } },
-      imageData: [] as { src: string; file: File }[]
+      imageData: [] as { src: string; file: File }[],
+      user: JSON.parse(localStorage.getItem("user") as string)
     };
   },
   components: {
