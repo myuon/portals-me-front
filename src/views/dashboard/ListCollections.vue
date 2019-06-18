@@ -2,7 +2,7 @@
   <amplify-connect :query="listCollectionsQuery">
     <template slot-scope="{loading, data, errors}">
       <div v-if="loading">Loading...</div>
-      <div v-else-if="errors.length > 0">Error!</div>
+      <div v-else-if="errors.length > 0">{{ errors }}</div>
       <div v-else-if="data">
         <v-layout row wrap>
           <v-flex xs3 v-for="collection in data.listCollections" :key="collection.id">
@@ -41,6 +41,7 @@
 <script lang="ts">
 import Vue from "vue";
 import * as queries from "../../graphql/queries";
+import * as API from "../../API";
 
 export default Vue.extend({
   props: ["collection", "user"],
@@ -49,7 +50,7 @@ export default Vue.extend({
     listCollectionsQuery() {
       return this.$Amplify.graphqlOperation(queries.listCollections, {
         owner: this.user.id
-      });
+      } as API.ListCollectionsQueryVariables);
     }
   }
 });

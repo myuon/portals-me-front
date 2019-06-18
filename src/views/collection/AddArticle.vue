@@ -118,7 +118,7 @@ export default Vue.extend({
         entity: {
           type: "share",
           format: "oembed",
-          url: this.url
+          url: this.form.url
         },
         title: this.form.title,
         description: this.form.description,
