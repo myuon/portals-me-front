@@ -1,11 +1,11 @@
 <template>
-  <amplify-connect :query="listCollectionsQuery">
+  <amplify-connect :query="listYourCollectionsQuery">
     <template slot-scope="{loading, data, errors}">
       <div v-if="loading">Loading...</div>
       <div v-else-if="errors.length > 0">{{ errors }}</div>
       <div v-else-if="data">
         <v-layout row wrap>
-          <v-flex xs3 v-for="collection in data.listCollections" :key="collection.id">
+          <v-flex xs3 v-for="collection in data.yourCollections" :key="collection.id">
             <v-card>
               <v-img
                 aspect-ratio="2.75"
@@ -47,10 +47,8 @@ export default Vue.extend({
   props: ["collection", "user"],
 
   computed: {
-    listCollectionsQuery() {
-      return this.$Amplify.graphqlOperation(queries.listCollections, {
-        owner: this.user.id
-      } as API.ListCollectionsQueryVariables);
+    listYourCollectionsQuery() {
+      return this.$Amplify.graphqlOperation(queries.yourCollections, {});
     }
   }
 });
