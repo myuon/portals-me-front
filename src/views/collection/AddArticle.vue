@@ -104,8 +104,8 @@ export default Vue.extend({
         valid: true,
         url: "",
         checkbox: false,
-        title: "",
-        description: ""
+        title: "No title",
+        description: "No description"
       },
       tab: null,
       imageData: null

@@ -10,8 +10,9 @@
               <v-flex xs5>
                 <h2>
                   <v-icon>collections</v-icon>
-                  {{ data.getCollection.owner }} / {{ data.getCollection.title }}
+                  {{ data.getCollection.title }}
                 </h2>
+                {{ data.getCollection.owner }} / {{ data.getCollection.title }}
                 <pre>{{ data.getCollection.description }}</pre>
               </v-flex>
 

@@ -19,23 +19,29 @@
         </v-layout>
 
         <v-dialog v-model="dialog" max-width="600">
-          <v-card class="text-sm-left">
-            <v-card-title class="headline" v-if="activeArticle.id">{{ activeArticle.title }}</v-card-title>
+          <template v-if="index">
+            <v-card class="text-sm-left">
+              <v-card-title class="headline">{{ data.listArticles[index].title }}</v-card-title>
 
-            <v-card-text>
-              <pre v-if="activeArticle.id">{{ activeArticle.description }}</pre>
+              <v-card-text>
+                <pre v-if="data.listArticles[index].id">{{ data.listArticles[index].description }}</pre>
 
-              <p v-if="activeArticle.id && activeArticle.entity.type == 'share'">
-                <a :href="activeArticle.entity.url">{{ activeArticle.entity.url }}</a>
-              </p>
+                <p
+                  v-if="data.listArticles[index].id && data.listArticles[index].entity.type == 'share'"
+                >
+                  <a
+                    :href="data.listArticles[index].entity.url"
+                  >{{ data.listArticles[index].entity.url }}</a>
+                </p>
 
-              <v-img
-                :src="activeArticle.entity.url"
-                v-if="activeArticle.id && activeArticle.entity.type == 'image'"
-              />
-              <div ref="articleDialog"></div>
-            </v-card-text>
-          </v-card>
+                <v-img
+                  :src="data.listArticles[index].entity.url"
+                  v-if="data.listArticles[index].id && data.listArticles[index].entity.type == 'image'"
+                />
+                <div ref="articleDialog"></div>
+              </v-card-text>
+            </v-card>
+          </template>
         </v-dialog>
       </div>
     </template>
@@ -52,7 +58,8 @@ export default Vue.extend({
     return {
       articles: [],
       activeArticle: {},
-      dialog: null
+      dialog: null,
+      index: null
     };
   },
 
@@ -64,8 +71,11 @@ export default Vue.extend({
     }
   },
 
-  mounted() {
-    console.log(this.$route.params.collectionId);
+  methods: {
+    clickArticleCard(index) {
+      this.dialog = true;
+      this.index = index;
+    }
   }
 });
 </script>
