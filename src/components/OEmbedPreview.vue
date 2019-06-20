@@ -43,13 +43,14 @@ export default Vue.extend({
   },
 
   watch: {
-    url(newUrl, oldUrl) {
-      if (newUrl) {
-        this.previewOEmbed(this.$refs.preview as HTMLElement, newUrl);
-      } else {
-        (this.$refs.preview as HTMLElement).innerHTML = "";
-      }
+    url(newUrl, _) {
+      this.previewOEmbed(this.$refs.preview, newUrl);
     }
+  },
+
+  mounted() {
+    // workaround for first-open
+    this.previewOEmbed(this.$refs.preview, this.$props.url);
   }
 });
 </script>

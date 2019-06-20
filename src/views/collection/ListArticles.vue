@@ -38,7 +38,6 @@
                   :src="data.listArticles[index].entity.url"
                   v-if="data.listArticles[index].id && data.listArticles[index].entity.type == 'image'"
                 />
-                <div ref="articleDialog"></div>
                 <o-embed-preview :url="data.listArticles[index].entity.url"/>
               </v-card-text>
             </v-card>
