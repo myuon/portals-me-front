@@ -19,7 +19,7 @@
         </v-layout>
 
         <v-dialog v-model="dialog" max-width="600">
-          <template v-if="index">
+          <template v-if="index != null">
             <v-card class="text-sm-left">
               <v-card-title class="headline">{{ data.listArticles[index].title }}</v-card-title>
 
@@ -39,6 +39,7 @@
                   v-if="data.listArticles[index].id && data.listArticles[index].entity.type == 'image'"
                 />
                 <div ref="articleDialog"></div>
+                <o-embed-preview :url="data.listArticles[index].entity.url"/>
               </v-card-text>
             </v-card>
           </template>
@@ -52,6 +53,7 @@
 import Vue from "vue";
 import * as queries from "../../graphql/queries";
 import * as API from "../../API";
+import OEmbedPreview from "../../components/OEmbedPreview.vue";
 
 export default Vue.extend({
   data() {
@@ -61,6 +63,10 @@ export default Vue.extend({
       dialog: null,
       index: null
     };
+  },
+
+  components: {
+    OEmbedPreview
   },
 
   computed: {
