@@ -9,10 +9,10 @@
           <div>
             <p style="color: red">{{ signInError }}</p>
             <v-btn color="red" dark @click="signInWithGoogle">Googleでログイン</v-btn>
-            <br />
+            <br>
             <v-btn color="light-blue" dark @click="signInWithTwitter">Twitterでログイン</v-btn>
           </div>
-          <br />
+          <br>
           <router-link to="/signup">アカウントを持っていない場合はこちら</router-link>
         </v-card-text>
       </v-card>
@@ -21,20 +21,20 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import axios from 'axios';
-import sdk from '../app/sdk';
-import { User } from './User.vue';
+import Vue from "vue";
+import axios from "axios";
+import sdk from "../app/sdk";
+import { User } from "./User.vue";
 
 export default Vue.extend({
-  props: [ 'signin' ],
-  data () {
+  props: ["signin"],
+  data() {
     return {
-      signInError: '',
+      signInError: ""
     };
   },
   methods: {
-    async signInWithGoogle () {
+    async signInWithGoogle() {
       const user = await (this as any).$gAuth.signIn();
 
       try {
@@ -47,38 +47,50 @@ export default Vue.extend({
         return;
       }
     },
-    async signInWithTwitter () {
-      const twitterAuthURL = await axios.post(`${process.env.VUE_APP_API_ENDPOINT}/auth/twitter`);
+    async signInWithTwitter() {
+      const twitterAuthURL = await axios.post(
+        `${process.env.VUE_APP_AUTH_API_ENDPOINT}/twitter`
+      );
       location.href = twitterAuthURL.data;
 
       // Jump to mounted.twitter-callback
     },
-    async signInWithTwitterAfter (token: { oauth_token: string, oauth_verifier: string }) {
+    async signInWithTwitterAfter(token: {
+      oauth_token: string;
+      oauth_verifier: string;
+    }) {
       try {
-        const credential = (await axios.get(`${process.env.VUE_APP_API_ENDPOINT}/auth/twitter?oauth_token=${token.oauth_token}&oauth_verifier=${token.oauth_verifier}`)).data.credential;
+        const credential = (await axios.get(
+          `${process.env.VUE_APP_AUTH_API_ENDPOINT}/twitter?oauth_token=${
+            token.oauth_token
+          }&oauth_verifier=${token.oauth_verifier}`
+        )).data.credential;
         const result = (await sdk.signIn({
-          twitter: credential,
+          twitter: credential
         })).data;
         await this.toDashboard(result);
       } catch (err) {
-        this.signInError = 'LoginError';
-        this.$router.push('/signin');
+        this.signInError = "LoginError";
+        this.$router.push("/signin");
         return;
       }
     },
-    async toDashboard ({ id_token, user }: { id_token: string, user: User }) {
-      localStorage.setItem('id_token', id_token);
-      localStorage.setItem('user', JSON.stringify(user));
-      this.$router.push('/dashboard');
+    async toDashboard({ id_token, user }: { id_token: string; user: User }) {
+      localStorage.setItem("id_token", id_token);
+      localStorage.setItem("user", JSON.stringify(user));
+      this.$router.push("/dashboard");
     }
   },
-  mounted () {
+  mounted() {
     // twitter-callback
     // Continue to signInWithTwitter
-    if (this.$route.path.startsWith('/signin/twitter-callback')) {
-      this.signInWithTwitterAfter(this.$route.query as { oauth_token: string, oauth_verifier: string });
+    if (this.$route.path.startsWith("/signin/twitter-callback")) {
+      this.signInWithTwitterAfter(this.$route.query as {
+        oauth_token: string;
+        oauth_verifier: string;
+      });
     }
-  },
-})
+  }
+});
 </script>
 
