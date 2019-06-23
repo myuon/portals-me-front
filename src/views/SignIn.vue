@@ -64,11 +64,26 @@ export default Vue.extend({
           `${process.env.VUE_APP_AUTH_API_ENDPOINT}/twitter?oauth_token=${
             token.oauth_token
           }&oauth_verifier=${token.oauth_verifier}`
-        )).data.credential;
-        const result = (await sdk.signIn({
-          twitter: credential
-        })).data;
-        await this.toDashboard(result);
+        )).data;
+        const result = await fetch(
+          `${process.env.VUE_APP_AUTH_API_ENDPOINT}/authenticate`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              auth_type: "twitter",
+              data: {
+                credential_token: credential.credential_token,
+                credential_secret: credential.credential_secret
+              }
+            })
+          }
+        );
+        const data = await result.text();
+
+        await this.toDashboard(data);
       } catch (err) {
         this.signInError = "LoginError";
         this.$router.push("/signin");
