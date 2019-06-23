@@ -82,7 +82,6 @@ export default Vue.extend({
           }
         );
         const data = await result.text();
-
         await this.toDashboard(data);
       } catch (err) {
         this.signInError = "LoginError";
@@ -90,9 +89,12 @@ export default Vue.extend({
         return;
       }
     },
-    async toDashboard({ id_token, user }: { id_token: string; user: User }) {
-      localStorage.setItem("id_token", id_token);
-      localStorage.setItem("user", JSON.stringify(user));
+    async toDashboard(token: string) {
+      localStorage.setItem("id_token", token);
+      localStorage.setItem(
+        "user",
+        atob(JSON.parse(atob(token.split(".")[1])).data)
+      );
       this.$router.push("/dashboard");
     }
   },
