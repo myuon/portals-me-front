@@ -93,7 +93,9 @@ export default Vue.extend({
       localStorage.setItem("id_token", token);
       localStorage.setItem(
         "user",
-        atob(JSON.parse(atob(token.split(".")[1])).data)
+        decodeURIComponent(
+          escape(atob(JSON.parse(atob(token.split(".")[1])).data))
+        )
       );
       this.$router.push("/dashboard");
     }
