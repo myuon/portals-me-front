@@ -65,23 +65,22 @@ export default Vue.extend({
             token.oauth_token
           }&oauth_verifier=${token.oauth_verifier}`
         )).data;
-        const result = await fetch(
+        const data = (await axios.post(
           `${process.env.VUE_APP_AUTH_API_ENDPOINT}/authenticate`,
           {
-            method: "POST",
+            auth_type: "twitter",
+            data: {
+              credential_token: credential.credential_token,
+              credential_secret: credential.credential_secret
+            }
+          },
+          {
             headers: {
               "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              auth_type: "twitter",
-              data: {
-                credential_token: credential.credential_token,
-                credential_secret: credential.credential_secret
-              }
-            })
+            }
           }
-        );
-        const data = await result.text();
+        )).data;
+
         await this.toDashboard(data);
       } catch (err) {
         this.signInError = "LoginError";
