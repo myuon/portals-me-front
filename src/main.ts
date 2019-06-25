@@ -7,7 +7,6 @@ import store from '@/store'
 import Amplify, * as AmplifyModules from 'aws-amplify'
 import { AmplifyPlugin } from 'aws-amplify-vue'
 import awsconfig from './aws-exports'
-const vueConfig = require('vue-config');
 const GAuth = require('vue-google-oauth2').default;
 
 Vue.use(Vuetify);
