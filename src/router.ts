@@ -87,7 +87,7 @@ export default new Router({
       }
     },
     {
-      path: '/users/:userId',
+      path: '/users/:name',
       name: 'user',
       components: {
         default: User,

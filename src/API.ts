@@ -201,3 +201,17 @@ export type ListArticlesQuery = {
     updated_at: string,
   } > | null,
 };
+
+export type GetUserByNameQueryVariables = {
+  name: string,
+};
+
+export type GetUserByNameQuery = {
+  getUserByName:  {
+    __typename: "User",
+    id: string,
+    name: string,
+    picture: string | null,
+    display_name: string | null,
+  } | null,
+};

@@ -52,3 +52,12 @@ export const listArticles = `query ListArticles($collectionId: String!) {
   }
 }
 `;
+export const getUserByName = `query GetUserByName($name: String!) {
+  getUserByName(name: $name) {
+    id
+    name
+    picture
+    display_name
+  }
+}
+`;
