@@ -10,7 +10,10 @@
               <v-flex xs5>
                 <h2>
                   <v-icon>collections</v-icon>
-                  {{ data.getCollection.owner }} / {{ data.getCollection.title }}
+                  <router-link
+                    :to="`/users/${data.getCollection.owner}`"
+                  >{{ data.getCollection.owner }}</router-link>
+                  / {{ data.getCollection.title }}
                 </h2>
                 <pre>{{ data.getCollection.description }}</pre>
               </v-flex>
