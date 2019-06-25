@@ -10,31 +10,9 @@ import awsconfig from './aws-exports'
 const vueConfig = require('vue-config');
 const GAuth = require('vue-google-oauth2').default;
 
-let keys;
-let key = process.env.VUE_APP_TWITTER_KEY || '.';
-try {
-  keys = require('../../token/auth.json');
-  key = keys.twitter;
-} catch (e) {
-  console.log(e);
-}
-
 Vue.use(Vuetify);
-Vue.use(vueConfig, {
-  API: process.env.API_ENDPOINT,
-  isDev: process.env.NODE_ENV === 'development',
-  providers: {
-    auth: {
-      twitter: {
-        clientId: key.split('.')[0],
-        clientSecret: key.split('.')[1],
-      }
-    }
-  },
-});
-
 Vue.use(GAuth, {
-  clientId: (keys && keys.google) || process.env.VUE_APP_GOOGLE_KEY,
+  clientId: '670077302427-0r21asrffhmuhkvfq10qa8kj86cslojn.apps.googleusercontent.com',
 });
 
 Amplify.configure(awsconfig);

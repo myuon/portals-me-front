@@ -7,7 +7,7 @@
 
     <v-spacer></v-spacer>
 
-    <v-chip color="purple lighten-2" small v-if="$config.isDev">Development</v-chip>
+    <v-chip color="purple lighten-2" small v-if="isDev">Development</v-chip>
 
     <v-toolbar-items v-if="user != null">
       <v-menu offset-y>
@@ -40,6 +40,13 @@ export default Vue.extend({
       user: null as User | null
     };
   },
+
+  computed: {
+    isDev() {
+      return process.env.NODE_ENV === "development";
+    }
+  },
+
   methods: {
     async signOut() {
       localStorage.setItem("id_token", "");
