@@ -18,7 +18,7 @@
 
               <v-tab-item>
                 <v-container fluid>
-                  <div ref="oEmbedPreview">ここにプレビューが表示されます…</div>
+                  <o-embed-preview :url="form.url"/>
                 </v-container>
 
                 <v-form v-model="form.valid" ref="form" lazy-validation>
@@ -27,7 +27,6 @@
                     label="URLを入力"
                     :rules="[v => !!v || '必須項目です']"
                     required
-                    @input="previewOEmbed($refs.oEmbedPreview, form.url)"
                   />
 
                   <v-text-field
@@ -90,12 +89,17 @@
 
 <script lang="ts">
 import Vue from "vue";
+import OEmbedPreview from "../../components/OEmbedPreview.vue";
 import { graphqlOperation } from "aws-amplify";
 import * as mutations from "../../graphql/mutations";
 import * as API from "../../API";
 
 export default Vue.extend({
   props: ["user"],
+
+  components: {
+    OEmbedPreview
+  },
 
   data() {
     return {
