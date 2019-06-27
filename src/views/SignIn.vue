@@ -66,7 +66,7 @@ export default Vue.extend({
           }&oauth_verifier=${token.oauth_verifier}`
         )).data;
         const data = (await axios.post(
-          `${process.env.VUE_APP_AUTH_API_ENDPOINT}/authenticate`,
+          `${process.env.VUE_APP_AUTH_API_ENDPOINT}/signin`,
           {
             auth_type: "twitter",
             data: {

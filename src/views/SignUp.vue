@@ -54,6 +54,8 @@ export default Vue.extend({
   props: ["signup"],
   data() {
     return {
+      credential_token: "",
+      credential_secret: "",
       form: {
         name: "",
         display_name: "",
@@ -65,9 +67,14 @@ export default Vue.extend({
     };
   },
   methods: {
-    async toDashboard({ id_token, user }: { id_token: string; user: User }) {
-      localStorage.setItem("id_token", id_token);
-      localStorage.setItem("user", JSON.stringify(user));
+    async toDashboard(token: string) {
+      localStorage.setItem("id_token", token);
+      localStorage.setItem(
+        "user",
+        decodeURIComponent(
+          escape(atob(JSON.parse(atob(token.split(".")[1])).data))
+        )
+      );
       this.$router.push("/dashboard");
     },
     async signUpWithGoogle() {
@@ -96,11 +103,13 @@ export default Vue.extend({
       oauth_verifier: string;
     }) {
       const result = (await axios.get(
-        `${process.env.VUE_APP_API_ENDPOINT}/auth/twitter?oauth_token=${
+        `${process.env.VUE_APP_AUTH_API_ENDPOINT}/twitter?oauth_token=${
           token.oauth_token
         }&oauth_verifier=${token.oauth_verifier}`
       )).data;
       const account = result.account;
+      this.credential_token = result.credential_token;
+      this.credential_secret = result.credential_secret;
       console.log(account);
       console.log(token);
 
@@ -117,11 +126,28 @@ export default Vue.extend({
     },
     async signUp() {
       try {
-        const result = (await sdk.signUp({
-          form: this.form,
-          logins: this.logins
-        })).data;
-        await this.toDashboard(result);
+        const data = (await axios.post(
+          `${process.env.VUE_APP_AUTH_API_ENDPOINT}/signup`,
+          {
+            auth_type: "twitter",
+            data: {
+              credential_token: this.credential_token,
+              credential_secret: this.credential_secret
+            },
+            user: {
+              name: this.form.name,
+              display_name: this.form.display_name,
+              picture: this.form.picture
+            }
+          },
+          {
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }
+        )).data;
+
+        await this.toDashboard(data);
       } catch (err) {
         this.signUpError = "SignUpError";
         this.$router.push("/signup");
