@@ -15,10 +15,10 @@ export const getPostSummary = `query GetPostSummary($id: ID!) {
     id
     title
     description
-    updatedAt
-    createdAt
+    updated_at
+    created_at
     owner
-    entityType
+    entity_type
     entity {
       ... on Share {
         format

@@ -10,10 +10,10 @@ export const addSharePost = `mutation AddSharePost(
     id
     title
     description
-    updatedAt
-    createdAt
+    updated_at
+    created_at
     owner
-    entityType
+    entity_type
     entity {
       ... on Share {
         format
@@ -32,10 +32,10 @@ export const addImagePost = `mutation AddImagePost(
     id
     title
     description
-    updatedAt
-    createdAt
+    updated_at
+    created_at
     owner
-    entityType
+    entity_type
     entity {
       ... on Share {
         format
