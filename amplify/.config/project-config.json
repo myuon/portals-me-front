@@ -1,0 +1,17 @@
+{
+    "projectName": "portals-me-front",
+    "version": "2.0",
+    "frontend": "javascript",
+    "javascript": {
+        "framework": "vue",
+        "config": {
+            "SourceDir": "src",
+            "DistributionDir": "dist",
+            "BuildCommand": "yarn build:amplify",
+            "StartCommand": "yarn start:amplify"
+        }
+    },
+    "providers": [
+        "awscloudformation"
+    ]
+}
