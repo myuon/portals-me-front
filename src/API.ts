@@ -1,205 +1,72 @@
 /* tslint:disable */
 //  This file was automatically generated and should not be edited.
 
-export type CoverInput = {
-  color: string,
-  sort: string,
-};
-
-export type EntityInput = {
+export type ShareInput = {
   format: string,
-  type: string,
   url: string,
 };
 
-export type AddCollectionMutationVariables = {
-  name: string,
-  title?: string | null,
-  description?: string | null,
-  cover?: CoverInput | null,
-  media?: Array< string > | null,
+export type ImagesInput = {
+  images: Array< ImageInput >,
 };
 
-export type AddCollectionMutation = {
-  addCollection:  {
-    __typename: "Collection",
+export type ImageInput = {
+  filetype: string,
+  s3path: string,
+};
+
+export type AddSharePostMutationVariables = {
+  title?: string | null,
+  description?: string | null,
+  entity: ShareInput,
+};
+
+export type AddSharePostMutation = {
+  addSharePost:  {
+    __typename: "PostSummary",
     id: string,
-    owner: string,
-    name: string,
     title: string | null,
     description: string | null,
-    cover:  {
-      __typename: "Cover",
-      color: string,
-      sort: string,
-    } | null,
-    media: Array< string > | null,
-    created_at: string,
-    updated_at: string,
+    updatedAt: string,
+    createdAt: string,
+    owner: string,
+    entityType: string,
+    entity: ( {
+        __typename: "Share",
+        format: string,
+        url: string,
+      } | {
+        __typename: "Images",
+      }
+    ),
   },
 };
 
-export type UpdateCollectionMutationVariables = {
-  id: string,
+export type AddImagePostMutationVariables = {
   title?: string | null,
   description?: string | null,
+  entity: ImagesInput,
 };
 
-export type UpdateCollectionMutation = {
-  updateCollection:  {
-    __typename: "Collection",
+export type AddImagePostMutation = {
+  addImagePost:  {
+    __typename: "PostSummary",
     id: string,
-    owner: string,
-    name: string,
     title: string | null,
     description: string | null,
-    cover:  {
-      __typename: "Cover",
-      color: string,
-      sort: string,
-    } | null,
-    media: Array< string > | null,
-    created_at: string,
-    updated_at: string,
+    updatedAt: string,
+    createdAt: string,
+    owner: string,
+    entityType: string,
+    entity: ( {
+        __typename: "Share",
+        format: string,
+        url: string,
+      } | {
+        __typename: "Images",
+      }
+    ),
   },
-};
-
-export type DeleteCollectionMutationVariables = {
-  id: string,
-};
-
-export type DeleteCollectionMutation = {
-  deleteCollection:  {
-    __typename: "Collection",
-    id: string,
-    owner: string,
-    name: string,
-    title: string | null,
-    description: string | null,
-    cover:  {
-      __typename: "Cover",
-      color: string,
-      sort: string,
-    } | null,
-    media: Array< string > | null,
-    created_at: string,
-    updated_at: string,
-  } | null,
-};
-
-export type AddArticleMutationVariables = {
-  collectionId: string,
-  entity: EntityInput,
-  title?: string | null,
-  description?: string | null,
-};
-
-export type AddArticleMutation = {
-  addArticle:  {
-    __typename: "Article",
-    collectionId: string,
-    id: string,
-    entity:  {
-      __typename: "Entity",
-      format: string,
-      type: string,
-      url: string,
-    },
-    title: string | null,
-    description: string | null,
-    owner: string,
-    created_at: string,
-    updated_at: string,
-  },
-};
-
-export type DeleteArticleMutationVariables = {
-  collectionId: string,
-  id: string,
-};
-
-export type DeleteArticleMutation = {
-  deleteArticle:  {
-    __typename: "Article",
-    collectionId: string,
-    id: string,
-    entity:  {
-      __typename: "Entity",
-      format: string,
-      type: string,
-      url: string,
-    },
-    title: string | null,
-    description: string | null,
-    owner: string,
-    created_at: string,
-    updated_at: string,
-  } | null,
-};
-
-export type GetCollectionQueryVariables = {
-  id: string,
-};
-
-export type GetCollectionQuery = {
-  getCollection:  {
-    __typename: "Collection",
-    id: string,
-    owner: string,
-    name: string,
-    title: string | null,
-    description: string | null,
-    cover:  {
-      __typename: "Cover",
-      color: string,
-      sort: string,
-    } | null,
-    media: Array< string > | null,
-    created_at: string,
-    updated_at: string,
-  } | null,
-};
-
-export type YourCollectionsQuery = {
-  yourCollections:  Array< {
-    __typename: "Collection",
-    id: string,
-    owner: string,
-    name: string,
-    title: string | null,
-    description: string | null,
-    cover:  {
-      __typename: "Cover",
-      color: string,
-      sort: string,
-    } | null,
-    media: Array< string > | null,
-    created_at: string,
-    updated_at: string,
-  } > | null,
-};
-
-export type ListArticlesQueryVariables = {
-  collectionId: string,
-};
-
-export type ListArticlesQuery = {
-  listArticles:  Array< {
-    __typename: "Article",
-    collectionId: string,
-    id: string,
-    entity:  {
-      __typename: "Entity",
-      format: string,
-      type: string,
-      url: string,
-    },
-    title: string | null,
-    description: string | null,
-    owner: string,
-    created_at: string,
-    updated_at: string,
-  } > | null,
 };
 
 export type GetUserByNameQueryVariables = {
@@ -214,4 +81,29 @@ export type GetUserByNameQuery = {
     picture: string | null,
     display_name: string | null,
   } | null,
+};
+
+export type GetPostSummaryQueryVariables = {
+  id: string,
+};
+
+export type GetPostSummaryQuery = {
+  getPostSummary:  {
+    __typename: "PostSummary",
+    id: string,
+    title: string | null,
+    description: string | null,
+    updatedAt: string,
+    createdAt: string,
+    owner: string,
+    entityType: string,
+    entity: ( {
+        __typename: "Share",
+        format: string,
+        url: string,
+      } | {
+        __typename: "Images",
+      }
+    ),
+  },
 };
