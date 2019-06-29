@@ -1,98 +1,98 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from "vue";
+import Router from "vue-router";
 
-import SideBar from '@/components/TheSideBar.vue';
-import UnsignedTopBar from '@/components/TheUnsignedTopBar.vue';
-import TopBar from '@/components/TheTopBar.vue';
-import EditUserBasicProfile from '@/components/EditUserBasicProfile.vue';
+import SideBar from "@/components/TheSideBar.vue";
+import UnsignedTopBar from "@/components/TheUnsignedTopBar.vue";
+import TopBar from "@/components/TheTopBar.vue";
+import EditUserBasicProfile from "@/components/EditUserBasicProfile.vue";
 
-import Landing from '@/views/Landing.vue';
-import Dashboard from '@/views/Dashboard.vue'
-import Collection from '@/views/Collection.vue';
-import SignIn from '@/views/SignIn.vue';
-import SignUp from '@/views/SignUp.vue';
-import User from '@/views/User.vue';
-import PasswordForm from '@/views/PasswordForm.vue';
+import Landing from "@/views/Landing.vue";
+import Dashboard from "@/views/Dashboard2.vue";
+import Collection from "@/views/Collection.vue";
+import SignIn from "@/views/SignIn.vue";
+import SignUp from "@/views/SignUp.vue";
+import User from "@/views/User.vue";
+import PasswordForm from "@/views/PasswordForm.vue";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
-      name: 'landing',
+      path: "/",
+      name: "landing",
       components: {
         default: Landing,
-        topbar: UnsignedTopBar,
-      },
-    },
-    {
-      path: '/signup',
-      name: 'signup',
-      components: {
-        default: SignUp,
-        topbar: UnsignedTopBar,
-      },
-    },
-    {
-      path: '/signup/twitter-callback',
-      name: 'signup-twitter-callback',
-      components: {
-        default: SignUp,
-        topbar: UnsignedTopBar,
-      },
-    },
-    {
-      path: '/signin',
-      name: 'signin',
-      components: {
-        default: SignIn,
-        topbar: UnsignedTopBar,
-      },
-    },
-    {
-      path: '/signin-password',
-      name: 'signin-password',
-      components: {
-        default: PasswordForm,
-        topbar: UnsignedTopBar,
+        topbar: UnsignedTopBar
       }
     },
     {
-      path: '/signin/twitter-callback',
-      name: 'signin-twitter-callback',
+      path: "/signup",
+      name: "signup",
       components: {
-        default: SignIn,
-        topbar: UnsignedTopBar,
-      },
+        default: SignUp,
+        topbar: UnsignedTopBar
+      }
     },
     {
-      path: '/dashboard',
-      name: 'home',
+      path: "/signup/twitter-callback",
+      name: "signup-twitter-callback",
+      components: {
+        default: SignUp,
+        topbar: UnsignedTopBar
+      }
+    },
+    {
+      path: "/signin",
+      name: "signin",
+      components: {
+        default: SignIn,
+        topbar: UnsignedTopBar
+      }
+    },
+    {
+      path: "/signin-password",
+      name: "signin-password",
+      components: {
+        default: PasswordForm,
+        topbar: UnsignedTopBar
+      }
+    },
+    {
+      path: "/signin/twitter-callback",
+      name: "signin-twitter-callback",
+      components: {
+        default: SignIn,
+        topbar: UnsignedTopBar
+      }
+    },
+    {
+      path: "/dashboard",
+      name: "home",
       components: {
         default: Dashboard,
         sidebar: SideBar,
-        topbar: TopBar,
-      },
+        topbar: TopBar
+      }
     },
     {
-      path: '/collections/:collectionId',
-      name: 'collection',
+      path: "/collections/:collectionId",
+      name: "collection",
       components: {
         default: Collection,
         sidebar: SideBar,
-        topbar: TopBar,
+        topbar: TopBar
       }
     },
     {
-      path: '/users/:name',
-      name: 'user',
+      path: "/users/:name",
+      name: "user",
       components: {
         default: User,
-        topbar: TopBar,
+        topbar: TopBar
       }
-    },
+    }
   ]
 });
