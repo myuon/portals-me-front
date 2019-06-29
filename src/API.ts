@@ -107,3 +107,28 @@ export type GetPostSummaryQuery = {
     ),
   },
 };
+
+export type ListPostSummaryQueryVariables = {
+  owner?: string | null,
+};
+
+export type ListPostSummaryQuery = {
+  listPostSummary:  Array< {
+    __typename: "PostSummary",
+    id: string,
+    title: string | null,
+    description: string | null,
+    updated_at: string,
+    created_at: string,
+    owner: string,
+    entity_type: string,
+    entity: ( {
+        __typename: "Share",
+        format: string,
+        url: string,
+      } | {
+        __typename: "Images",
+      }
+    ),
+  } >,
+};

@@ -28,3 +28,21 @@ export const getPostSummary = `query GetPostSummary($id: ID!) {
   }
 }
 `;
+export const listPostSummary = `query ListPostSummary($owner: String) {
+  listPostSummary(owner: $owner) {
+    id
+    title
+    description
+    updated_at
+    created_at
+    owner
+    entity_type
+    entity {
+      ... on Share {
+        format
+        url
+      }
+    }
+  }
+}
+`;
