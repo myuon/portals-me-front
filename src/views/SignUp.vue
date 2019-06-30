@@ -1,46 +1,61 @@
 <template>
-  <v-layout justify-center>
-    <v-flex xs4>
-      <v-card>
-        <v-card-title class="justify-center" primary-title>
-          <h2>Sign Up</h2>
-        </v-card-title>
-        <v-card-text>
-          <p style="color: red">{{ signUpError }}</p>
-          <v-stepper class="elevation-0" v-model="signUpStep">
-            <v-stepper-content step="1">
-              <v-btn color="red" @click="signUpWithGoogle" dark>Googleでアカウント作成</v-btn>
-              <br>
-              <v-btn color="light-blue" @click="signUpWithTwitter" dark>Twitterでアカウント作成</v-btn>
-            </v-stepper-content>
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-half">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">サインアップ</p>
+          </header>
+          <div class="card-content">
+            <p style="color: red" v-if="signUpError">{{ signUpError }}</p>
 
-            <v-stepper-content step="2">
-              <v-container>
-                <form>
-                  <v-flex>
-                    <v-text-field v-model="form.name" label="ユーザーID" append-outer-icon="check"/>
-                    <v-text-field v-model="form.display_name" label="表示される名前"/>
-                  </v-flex>
-                  <v-avatar color="orange" size="32px">
-                    <v-img :src="form.picture"/>
-                  </v-avatar>
-                  <v-btn depressed>アイコンをアップロード</v-btn>
+            <b-steps v-model="signUpStep" :has-navigation="false">
+              <b-step-item label="認証" icon="login">
+                <div class="content">
+                  <div style="margin: 10px;">
+                    <b-button
+                      size="is-medium"
+                      icon-left="google"
+                      style="background-color: #f43; color: #fff; border: none;"
+                      @click="signUpWithGoogle"
+                    >Googleでアカウント作成</b-button>
+                  </div>
+                  <div style="margin: 10px;">
+                    <b-button
+                      size="is-medium"
+                      icon-left="twitter"
+                      style="background-color: #0af; color: #fff; border: none;"
+                      @click="signUpWithTwitter"
+                    >Twitterでアカウント作成</b-button>
+                  </div>
+                </div>
+              </b-step-item>
+              <b-step-item label="プロフィール設定" icon="account">
+                <b-field label="ユーザーID">
+                  <b-input :value="form.name"/>
+                </b-field>
 
-                  <br>
+                <b-field label="表示名">
+                  <b-input :value="form.display_name"/>
+                </b-field>
 
-                  <v-btn color="success" @click="signUp">送信</v-btn>
-                  <v-btn depressed @click="signUpStep --;">キャンセル</v-btn>
-                </form>
-              </v-container>
-            </v-stepper-content>
-          </v-stepper>
+                <figure class="image is-32x32">
+                  <img class="is-rounded" :src="form.picture">
+                </figure>
 
-          <br>
-          <router-link to="/signin">アカウントを持っている場合はこちら</router-link>
-        </v-card-text>
-      </v-card>
-    </v-flex>
-  </v-layout>
+                <b-button type="is-success" @click="signUp">送信</b-button>
+                <b-button @click="signUpStep --; $router.push('/signup')">キャンセル</b-button>
+              </b-step-item>
+              <b-step-item label="完了" icon="account-plus"></b-step-item>
+            </b-steps>
+          </div>
+          <footer class="card-footer">
+            <router-link to="/signin" class="card-footer-item">アカウントを持っている場合はこちら</router-link>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -62,7 +77,7 @@ export default Vue.extend({
         picture: ""
       },
       logins: {},
-      signUpStep: 1,
+      signUpStep: 0,
       signUpError: ""
     };
   },

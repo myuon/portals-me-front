@@ -1,14 +1,19 @@
 <template>
-  <v-layout justify-center>
-    <v-flex xs3>
-      <v-form>
-        <v-text-field v-model="user_name" label="user_name"></v-text-field>
-        <v-text-field v-model="password" label="password"></v-text-field>
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-one-quarter">
+        <b-field label="user_name">
+          <b-input :value="user_name"/>
+        </b-field>
 
-        <v-btn color="primary" @click="submit">Submit</v-btn>
-      </v-form>
-    </v-flex>
-  </v-layout>
+        <b-field label="password">
+          <b-input :value="password"/>
+        </b-field>
+
+        <b-button type="is-primary" @click="submit">Submit</b-button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
