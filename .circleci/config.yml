@@ -8,18 +8,6 @@ jobs:
       - checkout
       - run: apt update && apt install -y python3 python3-pip
       - run: pip3 install awscli
-      - run: echo "VUE_APP_TWITTER_KEY=$TWITTER_KEY" >> .env.production
-      - run: echo "VUE_APP_GOOGLE_KEY=$GOOGLE_KEY" >> .env.production
-      - run: yarn && yarn deploy
-  deploy-stg:
-    docker:
-      - image: node
-    steps:
-      - checkout
-      - run: apt update && apt install -y python3 python3-pip
-      - run: pip3 install awscli
-      - run: echo "VUE_APP_TWITTER_KEY=$TWITTER_KEY" >> .env.production
-      - run: echo "VUE_APP_GOOGLE_KEY=$GOOGLE_KEY" >> .env.production
       - run: yarn && yarn build && aws s3 sync dist s3://portals-me-stg/ --acl public-read
   notify-approval:
     docker:
@@ -34,7 +22,7 @@ workflows:
   version: 2
   deploy:
     jobs:
-      - deploy-stg:
+      - deploy:
           filters:
             branches:
               only: master
@@ -45,6 +33,3 @@ workflows:
           type: approval
           requires:
             - notify-approval
-      - deploy:
-          requires:
-            - approval

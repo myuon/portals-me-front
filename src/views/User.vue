@@ -13,7 +13,6 @@
 <script lang="ts">
 import Vue from "vue";
 import VueRouter from "vue-router";
-import sdk from "../app/sdk";
 import * as API from "../API";
 import * as queries from "../graphql/queries";
 import UserProfile from "./user/UserProfile.vue";

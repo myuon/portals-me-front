@@ -62,7 +62,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import axios from "axios";
-import sdk from "../app/sdk";
 import { User } from "./User.vue";
 
 export default Vue.extend({

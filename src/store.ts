@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex, { MutationTree, GetterTree, ActionTree } from "vuex";
-import sdk from "@/app/sdk";
 
 Vue.use(Vuex);
 
