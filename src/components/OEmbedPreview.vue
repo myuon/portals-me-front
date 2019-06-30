@@ -22,7 +22,8 @@ export default Vue.extend({
       const url = getProvider(url_raw);
 
       if (!url) {
-        elem.innerText = "ここにプレビューが表示されます…";
+        elem.innerText =
+          url_raw == "" ? "ここにプレビューが表示されます…" : url_raw;
         return;
       }
 
