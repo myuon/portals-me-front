@@ -7,7 +7,7 @@ import TopBar from "@/components/TheTopBar.vue";
 import EditUserBasicProfile from "@/components/EditUserBasicProfile.vue";
 
 import Landing from "@/views/Landing.vue";
-import Dashboard from "@/views/Dashboard2.vue";
+import Dashboard from "@/views/Dashboard.vue";
 import Collection from "@/views/Collection.vue";
 import SignIn from "@/views/SignIn.vue";
 import SignUp from "@/views/SignUp.vue";
