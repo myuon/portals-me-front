@@ -7,7 +7,6 @@ import TopBar from "@/components/TheTopBar.vue";
 
 import Landing from "@/views/Landing.vue";
 import Dashboard from "@/views/Dashboard.vue";
-import Collection from "@/views/Collection.vue";
 import SignIn from "@/views/SignIn.vue";
 import SignUp from "@/views/SignUp.vue";
 import User from "@/views/User.vue";
@@ -72,15 +71,6 @@ export default new Router({
       name: "home",
       components: {
         default: Dashboard,
-        sidebar: SideBar,
-        topbar: TopBar
-      }
-    },
-    {
-      path: "/collections/:collectionId",
-      name: "collection",
-      components: {
-        default: Collection,
         sidebar: SideBar,
         topbar: TopBar
       }
