@@ -1,23 +1,39 @@
 <template>
-  <v-layout justify-center>
-    <v-flex xs4>
-      <v-card>
-        <v-card-title class="justify-center" primary-title>
-          <h2>Sign In</h2>
-        </v-card-title>
-        <v-card-text>
-          <div>
-            <p style="color: red">{{ signInError }}</p>
-            <v-btn color="red" dark @click="signInWithGoogle">Googleでログイン</v-btn>
-            <br>
-            <v-btn color="light-blue" dark @click="signInWithTwitter">Twitterでログイン</v-btn>
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-half">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">サインイン</p>
+          </header>
+          <div class="card-content">
+            <p style="color: red" v-if="signInError">{{ signInError }}</p>
+            <div class="content">
+              <div style="margin: 10px;">
+                <b-button
+                  size="is-medium"
+                  icon-left="google"
+                  style="background-color: #f43; color: #fff; border: none;"
+                  @click="signInWithGoogle"
+                >Googleでログイン</b-button>
+              </div>
+              <div style="margin: 10px;">
+                <b-button
+                  size="is-medium"
+                  icon-left="twitter"
+                  style="background-color: #0af; color: #fff; border: none;"
+                  @click="signInWithTwitter"
+                >Twitterでログイン</b-button>
+              </div>
+            </div>
           </div>
-          <br>
-          <router-link to="/signup">アカウントを持っていない場合はこちら</router-link>
-        </v-card-text>
-      </v-card>
-    </v-flex>
-  </v-layout>
+          <footer class="card-footer">
+            <router-link to="/signup" class="card-footer-item">アカウントを持っていない場合はこちら</router-link>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
