@@ -1,3 +1,10 @@
 module.exports = {
-  baseUrl: '/'
+  publicPath: "/",
+  css: {
+    loaderOptions: {
+      sass: {
+        data: `@import "~@/global.scss";`
+      }
+    }
+  }
 };

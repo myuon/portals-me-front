@@ -8,6 +8,7 @@
         aria-controls="contentIdForAlly1"
         style="margin: 10px"
         @click="open('share')"
+        :active="openTab == 'share'"
       />
       <icon-button
         icon="image"
@@ -16,6 +17,7 @@
         aria-controls="contentIdForAlly1"
         style="margin: 10px"
         @click="open('image')"
+        :active="openTab == 'image'"
       />
     </div>
 

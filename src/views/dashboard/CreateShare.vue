@@ -19,7 +19,7 @@
 
       <o-embed-preview :url="url"/>
 
-      <b-button :disabled="loading" @click="mutate">投稿</b-button>
+      <b-button type="is-tertiary" :disabled="loading" @click="mutate">投稿</b-button>
     </template>
   </amplify-connect>
 </template>
