@@ -29,7 +29,6 @@ export type AddSharePostMutation = {
     description: string | null,
     updated_at: string,
     created_at: string,
-    owner: string,
     entity_type: string,
     entity: ( {
         __typename: "Share",
@@ -39,6 +38,14 @@ export type AddSharePostMutation = {
         __typename: "Images",
       }
     ),
+    owner: string,
+    owner_user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      picture: string | null,
+      display_name: string | null,
+    } | null,
   },
 };
 
@@ -56,7 +63,6 @@ export type AddImagePostMutation = {
     description: string | null,
     updated_at: string,
     created_at: string,
-    owner: string,
     entity_type: string,
     entity: ( {
         __typename: "Share",
@@ -66,6 +72,14 @@ export type AddImagePostMutation = {
         __typename: "Images",
       }
     ),
+    owner: string,
+    owner_user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      picture: string | null,
+      display_name: string | null,
+    } | null,
   },
 };
 
@@ -95,7 +109,6 @@ export type GetPostSummaryQuery = {
     description: string | null,
     updated_at: string,
     created_at: string,
-    owner: string,
     entity_type: string,
     entity: ( {
         __typename: "Share",
@@ -105,6 +118,14 @@ export type GetPostSummaryQuery = {
         __typename: "Images",
       }
     ),
+    owner: string,
+    owner_user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      picture: string | null,
+      display_name: string | null,
+    } | null,
   },
 };
 
@@ -120,7 +141,6 @@ export type ListPostSummaryQuery = {
     description: string | null,
     updated_at: string,
     created_at: string,
-    owner: string,
     entity_type: string,
     entity: ( {
         __typename: "Share",
@@ -130,5 +150,13 @@ export type ListPostSummaryQuery = {
         __typename: "Images",
       }
     ),
+    owner: string,
+    owner_user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      picture: string | null,
+      display_name: string | null,
+    } | null,
   } >,
 };

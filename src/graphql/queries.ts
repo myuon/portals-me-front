@@ -17,13 +17,19 @@ export const getPostSummary = `query GetPostSummary($id: ID!) {
     description
     updated_at
     created_at
-    owner
     entity_type
     entity {
       ... on Share {
         format
         url
       }
+    }
+    owner
+    owner_user {
+      id
+      name
+      picture
+      display_name
     }
   }
 }
@@ -35,13 +41,19 @@ export const listPostSummary = `query ListPostSummary($owner: String) {
     description
     updated_at
     created_at
-    owner
     entity_type
     entity {
       ... on Share {
         format
         url
       }
+    }
+    owner
+    owner_user {
+      id
+      name
+      picture
+      display_name
     }
   }
 }

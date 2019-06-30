@@ -12,13 +12,19 @@ export const addSharePost = `mutation AddSharePost(
     description
     updated_at
     created_at
-    owner
     entity_type
     entity {
       ... on Share {
         format
         url
       }
+    }
+    owner
+    owner_user {
+      id
+      name
+      picture
+      display_name
     }
   }
 }
@@ -34,13 +40,19 @@ export const addImagePost = `mutation AddImagePost(
     description
     updated_at
     created_at
-    owner
     entity_type
     entity {
       ... on Share {
         format
         url
       }
+    }
+    owner
+    owner_user {
+      id
+      name
+      picture
+      display_name
     }
   }
 }
