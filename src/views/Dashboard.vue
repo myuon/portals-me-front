@@ -1,18 +1,20 @@
 <template>
-  <div class="column">
-    <div class="box">
-      <create-post/>
-    </div>
+  <div class="columns">
+    <div class="column is-half is-offset-one-quarter">
+      <div class="box">
+        <create-post/>
+      </div>
 
-    <amplify-connect :query="listPostSummary">
-      <template slot-scope="{ loading, data, errors }">
-        <template v-if="loading">Loading...</template>
-        <template v-else-if="errors.length > 0">{{ errors }}</template>
-        <template v-else-if="data">
-          <list-post :items="data.listPostSummary"/>
+      <amplify-connect :query="listPostSummary">
+        <template slot-scope="{ loading, data, errors }">
+          <template v-if="loading">Loading...</template>
+          <template v-else-if="errors.length > 0">{{ errors }}</template>
+          <template v-else-if="data">
+            <list-post :items="data.listPostSummary"/>
+          </template>
         </template>
-      </template>
-    </amplify-connect>
+      </amplify-connect>
+    </div>
   </div>
 </template>
 

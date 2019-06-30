@@ -1,4 +1,6 @@
 <template>
+  <div></div>
+  <!--
   <v-navigation-drawer
     v-model="isDrawerOpen"
     fixed
@@ -93,15 +95,16 @@
       </v-list-tile>
     </v-list>
   </v-navigation-drawer>
+  -->
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue from "vue";
 
 export default Vue.extend({
-  data () {
+  data() {
     return {
-      isDrawerOpen: true,
+      isDrawerOpen: true
     };
   }
 });

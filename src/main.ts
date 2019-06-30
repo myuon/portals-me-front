@@ -1,8 +1,6 @@
 import Vue from "vue";
 import Buefy from "buefy";
 import "buefy/dist/buefy.css";
-import Vuetify from "vuetify";
-import "vuetify/dist/vuetify.min.css";
 import router from "./router";
 import App from "./App.vue";
 import store from "@/store";
@@ -11,7 +9,6 @@ import { AmplifyPlugin } from "aws-amplify-vue";
 import awsconfig from "./aws-exports";
 const GAuth = require("vue-google-oauth2").default;
 
-Vue.use(Vuetify);
 Vue.use(Buefy);
 Vue.use(GAuth, {
   clientId:

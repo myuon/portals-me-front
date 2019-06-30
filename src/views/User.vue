@@ -4,9 +4,7 @@
       <template slot-scope="{loading, data, errors}">
         <template v-if="loading">loading...</template>
         <template v-if="errors.length > 0">{{ errors }}</template>
-        <v-layout justify-center v-if="data.getUserByName">
-          <user-profile :user="data.getUserByName"/>
-        </v-layout>
+        <user-profile :user="data.getUserByName" v-if="data.getUserByName"/>
       </template>
     </amplify-connect>
   </div>

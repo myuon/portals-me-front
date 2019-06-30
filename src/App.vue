@@ -1,11 +1,9 @@
 <template>
-  <v-app>
+  <div>
     <router-view name="sidebar"/>
     <router-view name="topbar"/>
-    <v-content>
-      <router-view/>
-    </v-content>
-  </v-app>
+    <router-view/>
+  </div>
 </template>
 
 <script lang="ts">
