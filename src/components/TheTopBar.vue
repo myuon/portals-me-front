@@ -1,33 +1,34 @@
 <template>
-  <v-toolbar absolute app clipped-left dense flat dark class="indigo darken-1">
-    <v-toolbar-side-icon @click.stop="toggleDrawer"></v-toolbar-side-icon>
-    <v-toolbar-title>
-      <router-link to="/dashboard" style="color: #fff; text-decoration: none;">Portals@me</router-link>
-    </v-toolbar-title>
+  <div>
+    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <div class="navbar-item brand-title">
+          <router-link to="/dashboard" style="color: #fff;">Portals@me</router-link>
+        </div>
+      </div>
 
-    <v-spacer></v-spacer>
+      <div class="navbar-menu">
+        <div class="navbar-end">
+          <div class="navbar-item" v-if="isDev">
+            <span class="tag is-danger">development</span>
+          </div>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link" v-if="user">
+              <figure class="image is-32x32">
+                <img class="is-rounded" :src="user.picture">
+              </figure>
+              {{ user.display_name }}
+            </a>
 
-    <v-chip color="purple lighten-2" small v-if="isDev">Development</v-chip>
-
-    <v-toolbar-items v-if="user != null">
-      <v-menu offset-y>
-        <v-btn slot="activator" flat>
-          <v-avatar color="orange" size="32px">
-            <v-img :src="user.picture"/>
-          </v-avatar>
-          &nbsp;&nbsp;{{ user.display_name }}
-        </v-btn>
-        <v-list>
-          <v-list-tile @click="$router.push(`/users/${user.name}`)">
-            <v-list-tile-title>プロフィール</v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile @click="signOut">
-            <v-list-tile-title>サインアウト</v-list-tile-title>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
-    </v-toolbar-items>
-  </v-toolbar>
+            <div class="navbar-dropdown">
+              <a class="navbar-item" @click="$router.push(`/users/${user.name}`)">プロフィール</a>
+              <a class="navbar-item" @click="signOut">サインアウト</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
 </template>
 
 <script lang="ts">
@@ -74,3 +75,11 @@ export default Vue.extend({
   }
 });
 </script>
+
+<style scoped>
+.brand-title {
+  font-size: larger;
+  font-weight: bold;
+}
+</style>
+
