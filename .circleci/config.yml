@@ -10,14 +10,6 @@ jobs:
       - run: pip3 install awscli
       - run: aws ssm get-parameter --name portals-me-client-stg-env --with-decryption | jq '.Parameter.Value' > .env.production
       - run: yarn && yarn build && aws s3 sync dist s3://portals-me-stg/ --acl public-read
-  notify-approval:
-    docker:
-      - image: node
-    steps:
-      - run: |
-          curl -X POST -H 'Content-type: application/json' \
-            --data "{\"text\": \"[portals-me-front] Please approve workflow from <https://circleci.com/workflow-run/${CIRCLE_WORKFLOW_ID}|here>.\"}" \
-            $SLACK_WEBHOOK_URL
 
 workflows:
   version: 2
@@ -27,10 +19,3 @@ workflows:
           filters:
             branches:
               only: master
-      - notify-approval:
-          requires:
-            - deploy-stg
-      - approval:
-          type: approval
-          requires:
-            - notify-approval
