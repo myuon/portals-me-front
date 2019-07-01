@@ -5,7 +5,6 @@ import App from "./App.vue";
 import store from "@/store";
 import Amplify, * as AmplifyModules from "aws-amplify";
 import { AmplifyPlugin } from "aws-amplify-vue";
-import awsconfig from "./aws-exports";
 const GAuth = require("vue-google-oauth2").default;
 
 Vue.use(Buefy);
@@ -14,7 +13,14 @@ Vue.use(GAuth, {
     "670077302427-0r21asrffhmuhkvfq10qa8kj86cslojn.apps.googleusercontent.com"
 });
 
-Amplify.configure(awsconfig);
+Amplify.configure({
+  aws_project_region: "ap-northeast-1",
+  aws_appsync_graphqlEndpoint: process.env.VUE_APP_GRAPHQL_API,
+  aws_appsync_region: "ap-northeast-1",
+  aws_appsync_authenticationType: "API_KEY",
+  aws_appsync_apiKey: process.env.VUE_APP_GRAPHQL_KEY
+});
+
 Amplify.configure({
   API: {
     graphql_headers: async () => {
