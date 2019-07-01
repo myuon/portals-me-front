@@ -5,14 +5,28 @@ orbs:
   aws-s3: circleci/aws-s3@1.0.11
 
 jobs:
-  deploy:
+  prebuild:
+    working_directory: ~/workspace
     executor: aws-cli/default
     steps:
       - checkout
       - aws-cli/install
       - run: sudo apt update && sudo apt install -y jq
       - run: aws ssm get-parameter --name portals-me-client-stg-env --with-decryption --region ap-northeast-1 | jq '.Parameter.Value' > .env.production
+  build:
+    working_directory: ~/workspace
+    docker:
+      - image: circleci/node:8.11.4
+    steps:
+      - checkout
+      - run: npm i -g yarn
       - run: yarn && yarn build
+  deploy:
+    working_directory: ~/workspace
+    executor: aws-cli/default
+    steps:
+      - checkout
+      - aws-cli/install
       - aws-s3/sync:
           from: dist
           to: "s3://portals-me-stg/"
@@ -23,8 +37,14 @@ workflows:
   version: 2
   deploy:
     jobs:
-      - deploy:
+      - prebuild:
           filters:
             branches:
               only: master
           context: aws
+      - build:
+          requires:
+            - prebuild
+      - deploy:
+          requires:
+            - build
