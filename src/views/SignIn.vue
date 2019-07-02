@@ -53,9 +53,21 @@ export default Vue.extend({
       const user = await (this as any).$gAuth.signIn();
 
       try {
-        const result = (await sdk.signIn({
-          google: user.getAuthResponse().id_token
-        })).data;
+        const result = (await axios.post(
+          `${process.env.VUE_APP_AUTH_API_ENDPOINT}/signin`,
+          {
+            auth_type: "google",
+            data: {
+              token: user.getAuthResponse().id_token
+            }
+          },
+          {
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }
+        )).data;
+
         await this.toDashboard(result);
       } catch (err) {
         this.signInError = err.response.data;
@@ -76,9 +88,7 @@ export default Vue.extend({
     }) {
       try {
         const credential = (await axios.get(
-          `${process.env.VUE_APP_AUTH_API_ENDPOINT}/twitter?oauth_token=${
-            token.oauth_token
-          }&oauth_verifier=${token.oauth_verifier}`
+          `${process.env.VUE_APP_AUTH_API_ENDPOINT}/twitter?oauth_token=${token.oauth_token}&oauth_verifier=${token.oauth_verifier}`
         )).data;
         const data = (await axios.post(
           `${process.env.VUE_APP_AUTH_API_ENDPOINT}/signin`,
