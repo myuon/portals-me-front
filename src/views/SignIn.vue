@@ -50,7 +50,6 @@ export default Vue.extend({
   },
   methods: {
     async signInWithGoogle() {
-      /*
       const user = await (this as any).$gAuth.signIn();
 
       try {
@@ -62,7 +61,6 @@ export default Vue.extend({
         this.signInError = err.response.data;
         return;
       }
-      */
     },
     async signInWithTwitter() {
       const twitterAuthURL = await axios.post(

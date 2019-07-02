@@ -68,14 +68,14 @@ export default Vue.extend({
   props: ["signup"],
   data() {
     return {
-      credential_token: "",
-      credential_secret: "",
+      auth_type: "",
+      google_token: {},
+      twitter_token: {},
       form: {
         name: "",
         display_name: "",
         picture: ""
       },
-      logins: {},
       signUpStep: 0,
       signUpError: ""
     };
@@ -100,9 +100,8 @@ export default Vue.extend({
         display_name: profile.getName(),
         picture: profile.getImageUrl()
       };
-      this.logins = {
-        google: user.getAuthResponse().id_token
-      };
+      this.auth_type = "google";
+      this.google_token = { token: user.getAuthResponse().id_token };
 
       this.signUpStep++;
     },
@@ -122,18 +121,16 @@ export default Vue.extend({
         }&oauth_verifier=${token.oauth_verifier}`
       )).data;
       const account = result.account;
-      this.credential_token = result.credential_token;
-      this.credential_secret = result.credential_secret;
-      console.log(account);
-      console.log(token);
 
       this.form = {
         name: account.screen_name,
         display_name: account.screen_name,
         picture: account.profile_image_url
       };
-      this.logins = {
-        twitter: result.credential
+      this.auth_token = "twitter";
+      this.twitter_token = {
+        credential_token: result.credential_token,
+        credential_secret: result.credential_secret
       };
 
       this.signUpStep++;
@@ -143,11 +140,13 @@ export default Vue.extend({
         const data = (await axios.post(
           `${process.env.VUE_APP_AUTH_API_ENDPOINT}/signup`,
           {
-            auth_type: "twitter",
-            data: {
-              credential_token: this.credential_token,
-              credential_secret: this.credential_secret
-            },
+            auth_type: this.auth_type,
+            data:
+              this.auth_type == "twitter"
+                ? this.twitter_token
+                : this.auth_type == "google"
+                ? this.google_token
+                : new Error("auth_type error"),
             user: {
               name: this.form.name,
               display_name: this.form.display_name,
