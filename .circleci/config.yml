@@ -16,7 +16,7 @@ jobs:
   build:
     working_directory: ~/workspace
     docker:
-      - image: circleci/node:8.11.4
+      - image: node
     steps:
       - checkout
       - run: npm i -g yarn
