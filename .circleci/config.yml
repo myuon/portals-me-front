@@ -48,3 +48,4 @@ workflows:
       - deploy:
           requires:
             - build
+          context: aws
