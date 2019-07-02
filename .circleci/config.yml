@@ -12,7 +12,7 @@ jobs:
       - checkout
       - aws-cli/install
       - run: sudo apt update && sudo apt install -y jq
-      - run: aws ssm get-parameter --name portals-me-client-stg-env --with-decryption --region ap-northeast-1 | jq '.Parameter.Value' > .env.production
+      - run: aws ssm get-parameter --name portals-me-client-stg-env --with-decryption --region ap-northeast-1 | jq -r '.Parameter.Value' > .env.production
       - persist_to_workspace:
           root: .
           paths:
