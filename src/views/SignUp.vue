@@ -32,15 +32,15 @@
               </b-step-item>
               <b-step-item label="プロフィール設定" icon="account">
                 <b-field label="ユーザーID">
-                  <b-input :value="form.name"/>
+                  <b-input v-model="form.name" />
                 </b-field>
 
                 <b-field label="表示名">
-                  <b-input :value="form.display_name"/>
+                  <b-input v-model="form.display_name" />
                 </b-field>
 
                 <figure class="image is-32x32">
-                  <img class="is-rounded" :src="form.picture">
+                  <img class="is-rounded" :src="form.picture" />
                 </figure>
 
                 <b-button type="is-success" @click="signUp">送信</b-button>
@@ -116,9 +116,7 @@ export default Vue.extend({
       oauth_verifier: string;
     }) {
       const result = (await axios.get(
-        `${process.env.VUE_APP_AUTH_API_ENDPOINT}/twitter?oauth_token=${
-          token.oauth_token
-        }&oauth_verifier=${token.oauth_verifier}`
+        `${process.env.VUE_APP_AUTH_API_ENDPOINT}/twitter?oauth_token=${token.oauth_token}&oauth_verifier=${token.oauth_verifier}`
       )).data;
       const account = result.account;
 
@@ -127,7 +125,7 @@ export default Vue.extend({
         display_name: account.screen_name,
         picture: account.profile_image_url
       };
-      this.auth_token = "twitter";
+      this.auth_type = "twitter";
       this.twitter_token = {
         credential_token: result.credential_token,
         credential_secret: result.credential_secret
