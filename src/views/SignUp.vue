@@ -31,20 +31,7 @@
                 </div>
               </b-step-item>
               <b-step-item label="プロフィール設定" icon="account">
-                <b-field label="ユーザーID">
-                  <b-input v-model="form.name" />
-                </b-field>
-
-                <b-field label="表示名">
-                  <b-input v-model="form.display_name" />
-                </b-field>
-
-                <figure class="image is-32x32">
-                  <img class="is-rounded" :src="form.picture" />
-                </figure>
-
-                <b-button type="is-success" @click="signUp">送信</b-button>
-                <b-button @click="signUpStep --; $router.push('/signup')">キャンセル</b-button>
+                <edit-user-profile :user="form" @submit="signUp" @cancel="cancel" />
               </b-step-item>
               <b-step-item label="完了" icon="account-plus"></b-step-item>
             </b-steps>
@@ -63,9 +50,15 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import axios from "axios";
 import { User } from "./User.vue";
+import EditUserProfile from "./user/EditUserProfile.vue";
 
 export default Vue.extend({
   props: ["signup"],
+
+  components: {
+    EditUserProfile
+  },
+
   data() {
     return {
       auth_type: "",
@@ -80,6 +73,7 @@ export default Vue.extend({
       signUpError: ""
     };
   },
+
   methods: {
     async toDashboard(token: string) {
       localStorage.setItem("id_token", token);
@@ -133,7 +127,7 @@ export default Vue.extend({
 
       this.signUpStep++;
     },
-    async signUp() {
+    async signUp(form) {
       try {
         const data = (await axios.post(
           `${process.env.VUE_APP_AUTH_API_ENDPOINT}/signup`,
@@ -146,9 +140,9 @@ export default Vue.extend({
                 ? this.google_token
                 : new Error("auth_type error"),
             user: {
-              name: this.form.name,
-              display_name: this.form.display_name,
-              picture: this.form.picture
+              name: form.name,
+              display_name: form.display_name,
+              picture: form.picture
             }
           },
           {
@@ -165,8 +159,18 @@ export default Vue.extend({
         this.signUpStep = 1;
         return;
       }
+    },
+    cancel() {
+      this.form = {
+        name: "",
+        display_name: "",
+        picture: ""
+      };
+      this.signUpStep--;
+      this.$router.push("/signup");
     }
   },
+
   mounted() {
     // twitter-callback
     // Continue to signUpWithTwitter

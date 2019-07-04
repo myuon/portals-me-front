@@ -35,16 +35,18 @@ export default Vue.extend({
         display_name: this.user.display_name,
         picture: this.user.picture
       },
-      nameUniqueness: null
+      nameUniqueness: null,
+      originalName: this.user.name
     };
   },
 
   methods: {
     async onInput() {
       if (!this.form.name) {
+        this.nameUniqueness = false;
         return;
       }
-      if (this.form.name == this.user.name) {
+      if (this.form.name == this.originalName) {
         this.nameUniqueness = null;
         return;
       }
@@ -61,6 +63,12 @@ export default Vue.extend({
           throw err;
         }
       }
+    }
+  },
+
+  watch: {
+    user(val) {
+      this.form = val;
     }
   }
 });

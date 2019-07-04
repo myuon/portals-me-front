@@ -52,8 +52,6 @@ export default Vue.extend({
 
   computed: {
     listPostSummary() {
-      console.log(this.$props);
-
       const arg: API.ListPostSummaryQueryVariables = {
         owner: this.$props.user.id
       };
