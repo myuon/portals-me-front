@@ -23,13 +23,13 @@
 
     <b-collapse :open.sync="isShareOpen" aria-id="contentIdForA11y1">
       <div class="content">
-        <create-share @submit="shareArg = $event; mutate()"/>
+        <create-share />
       </div>
     </b-collapse>
 
     <b-collapse :open.sync="isImageOpen" aria-id="contentIdForA11y1">
       <div class="content">
-        <create-image/>
+        <create-image />
       </div>
     </b-collapse>
   </div>

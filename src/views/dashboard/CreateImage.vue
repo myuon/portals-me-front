@@ -1,11 +1,11 @@
 <template>
   <div>
     <b-field label="タイトル">
-      <b-input/>
+      <b-input />
     </b-field>
 
     <b-field label="説明">
-      <b-input type="textarea"/>
+      <b-input type="textarea" />
     </b-field>
 
     <b-field>
@@ -13,7 +13,7 @@
         <section class="section">
           <div class="content has-text-centered">
             <p>
-              <b-icon icon="upload" size="is-large"/>
+              <b-icon icon="upload" size="is-large" />
             </p>
             <p>画像ファイルをアップロード</p>
           </div>
@@ -28,7 +28,7 @@
       </span>
     </div>
 
-    <b-button @click="$emit('submit')">投稿</b-button>
+    <b-button type="is-tertiary" @click="submit">投稿</b-button>
   </div>
 </template>
 
@@ -45,6 +45,15 @@ export default Vue.extend({
   methods: {
     deleteDropFile(index) {
       this.dropFiles.splice(index, 1);
+    },
+
+    submit() {
+      const formData = new FormData();
+      this.dropFiles.forEach(file => {
+        formData.append(file.name, file);
+      });
+
+      console.log(formData);
     }
   }
 });
