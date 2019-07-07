@@ -83,6 +83,14 @@ export type AddImagePostMutation = {
   },
 };
 
+export type GenerateUploadUrlMutationVariables = {
+  keys: Array< string >,
+};
+
+export type GenerateUploadUrlMutation = {
+  generateUploadURL: Array< string >,
+};
+
 export type GetUserByNameQueryVariables = {
   name: string,
 };

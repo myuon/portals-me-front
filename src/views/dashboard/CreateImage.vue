@@ -1,11 +1,11 @@
 <template>
   <div>
     <b-field label="タイトル">
-      <b-input />
+      <b-input v-model="title" />
     </b-field>
 
     <b-field label="説明">
-      <b-input type="textarea" />
+      <b-input type="textarea" v-model="description" />
     </b-field>
 
     <b-field>
@@ -34,11 +34,18 @@
 
 <script lang="ts">
 import Vue from "vue";
+import axios from "axios";
+import * as mutations from "../../graphql/mutations";
+import Amplify, { API, graphqlOperation } from "aws-amplify";
+import * as APITypes from "../../API";
+import { GraphQLResult } from "@aws-amplify/api/lib/types";
 
 export default Vue.extend({
   data() {
     return {
-      dropFiles: []
+      dropFiles: [],
+      title: "",
+      description: ""
     };
   },
 
@@ -47,15 +54,42 @@ export default Vue.extend({
       this.dropFiles.splice(index, 1);
     },
 
-    submit() {
-      const formData = new FormData();
+    async submit() {
+      const form = new FormData();
       this.dropFiles.forEach(file => {
-        formData.append(file.name, file);
+        form.append(file.name, file);
       });
 
-      console.log(formData);
+      const urls = ((await API.graphql(
+        graphqlOperation(mutations.generateUploadUrl, {
+          keys: this.dropFiles.map(file => file.name)
+        })
+      )) as any).data.generateUploadURL;
+      console.log(urls);
+
+      const imagePostInput: APITypes.AddImagePostMutationVariables = {
+        title: this.title || null,
+        description: this.description || null,
+        entity: {
+          images: this.dropFiles.map(
+            file =>
+              ({
+                filetype: file.type,
+                s3path: file.name
+              } as APITypes.ImageInput)
+          )
+        }
+      };
+
+      const result = await API.graphql(
+        graphqlOperation(mutations.addImagePost, imagePostInput)
+      );
+      await Promise.all(
+        urls.map((url, index) => axios.put(url, this.dropFiles[index]))
+      );
+      console.log(JSON.stringify(result));
+      console.log("Created image post");
     }
   }
 });
 </script>
-

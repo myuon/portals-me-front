@@ -5,7 +5,7 @@
         <div class="media">
           <div class="media-left">
             <figure class="image is-48x48">
-              <img :src="item.owner_user.picture" alt="Placeholder image">
+              <img :src="item.owner_user.picture" alt="Placeholder image" />
             </figure>
           </div>
 
@@ -18,7 +18,7 @@
         <div class="content">
           <p class="title is-4">{{ item.title }}</p>
           <p>{{ item.description }}</p>
-          <o-embed-preview :url="item.entity.url"/>
+          <o-embed-preview :url="item.entity.url" />
           <time :datetime="item.updated_at">{{ item.updated_at }}</time>
         </div>
       </div>

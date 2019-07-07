@@ -57,3 +57,7 @@ export const addImagePost = `mutation AddImagePost(
   }
 }
 `;
+export const generateUploadUrl = `mutation GenerateUploadUrl($keys: [String!]!) {
+  generateUploadURL(keys: $keys)
+}
+`;
