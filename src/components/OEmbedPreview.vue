@@ -1,6 +1,12 @@
 <template>
-  <div ref="preview"></div>
+  <div ref="preview" class="preview"></div>
 </template>
+
+<style>
+.preview > .twitter-tweet {
+  margin: auto;
+}
+</style>
 
 <script lang="ts">
 import Vue from "vue";
