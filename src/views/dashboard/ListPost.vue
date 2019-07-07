@@ -18,7 +18,16 @@
         <div class="content">
           <p class="title is-4">{{ item.title }}</p>
           <p>{{ item.description }}</p>
-          <o-embed-preview :url="item.entity.url" />
+          <o-embed-preview :url="item.entity.url" v-if="item.entity_type == 'Share'" />
+          <div v-else-if="item.entity_type == 'Images'">
+            <figure
+              class="image is-128x128"
+              :key="index"
+              v-for="(image,index) in item.entity.images"
+            >
+              <img :src="`${filesURL}/${item.owner}/${image.s3path}`" />
+            </figure>
+          </div>
           <time :datetime="item.updated_at">{{ item.updated_at }}</time>
         </div>
       </div>
@@ -36,7 +45,12 @@ export default Vue.extend({
 
   components: {
     OEmbedPreview
+  },
+
+  computed: {
+    filesURL() {
+      return process.env.VUE_APP_FILES_URL;
+    }
   }
 });
 </script>
-

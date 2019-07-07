@@ -2,7 +2,7 @@
   <div class="columns">
     <div class="column is-half is-offset-one-quarter">
       <div class="box">
-        <create-post/>
+        <create-post />
       </div>
 
       <amplify-connect :query="listPostSummary">
@@ -10,7 +10,7 @@
           <template v-if="loading">Loading...</template>
           <template v-else-if="errors.length > 0">{{ errors }}</template>
           <template v-else-if="data">
-            <list-post :items="data.listPostSummary"/>
+            <list-post :items="data.listPostSummary" />
           </template>
         </template>
       </amplify-connect>
@@ -32,7 +32,37 @@ export default Vue.extend({
 
   computed: {
     listPostSummary() {
-      return this.$Amplify.graphqlOperation(queries.listPostSummary);
+      return this.$Amplify
+        .graphqlOperation(`query ListPostSummary($owner: String) {
+  listPostSummary(owner: $owner) {
+    id
+    title
+    description
+    updated_at
+    created_at
+    entity_type
+    entity {
+      ... on Share {
+        format
+        url
+      }
+      ... on Images {
+        images {
+          filetype
+          s3path
+        }
+      }
+    }
+    owner
+    owner_user {
+      id
+      name
+      picture
+      display_name
+    }
+  }
+}
+`);
     }
   }
 });
