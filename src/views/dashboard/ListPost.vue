@@ -34,7 +34,6 @@
               </figure>
             </div>
           </div>
-          <time :datetime="item.updated_at">{{ item.updated_at }}</time>
         </div>
       </div>
     </div>
