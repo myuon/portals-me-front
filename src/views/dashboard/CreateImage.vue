@@ -88,6 +88,15 @@ export default Vue.extend({
         urls.map((url, index) => axios.put(url, this.dropFiles[index]))
       );
       console.log(JSON.stringify(result));
+
+      this.onCreateFinished();
+    },
+
+    onCreateFinished() {
+      this.title = "";
+      this.description = "";
+      this.dropFiles = [];
+
       console.log("Created image post");
     }
   }
