@@ -16,10 +16,7 @@
           v-if="user.id == me.id"
         >プロフィールを編集</b-button>
         <div class="notification">
-          <edit-user-profile
-            :user="user"
-            @submitted="$snackbar.open('プロフィールが更新されました。反映には時間がかかります。')"
-          />
+          <edit-user-profile :user="user" @submit="submit" />
         </div>
       </b-collapse>
 
@@ -44,6 +41,7 @@ import ListPost from "../dashboard/ListPost.vue";
 import * as queries from "../../graphql/queries";
 import * as API from "../../API";
 import EditUserProfile from "./EditUserProfile.vue";
+import axios from "axios";
 
 export default Vue.extend({
   props: ["user"],
@@ -99,8 +97,22 @@ export default Vue.extend({
   },
 
   methods: {
-    updateUserProfile() {},
-    follow() {}
+    follow() {},
+
+    async submit(form) {
+      const token = localStorage.getItem("id_token");
+
+      await axios.put(`${process.env.VUE_APP_AUTH_API_ENDPOINT}/self`, form, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      this.$emit("submitted");
+      this.$snackbar.open(
+        "プロフィールが更新されました。反映には時間がかかります。"
+      );
+    }
   }
 });
 </script>

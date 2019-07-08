@@ -16,7 +16,7 @@
       <img class="is-rounded" :src="form.picture" />
     </figure>
 
-    <b-button type="is-success" @click="submit">送信</b-button>
+    <b-button type="is-success" @click="$emit('submit', form)">送信</b-button>
     <b-button @click="$emit('cancel')">キャンセル</b-button>
   </section>
 </template>
@@ -63,22 +63,6 @@ export default Vue.extend({
           throw err;
         }
       }
-    },
-
-    async submit() {
-      const token = localStorage.getItem("id_token");
-
-      await axios.put(
-        `${process.env.VUE_APP_AUTH_API_ENDPOINT}/self`,
-        this.form,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
-
-      this.$emit("submitted");
     }
   },
 
