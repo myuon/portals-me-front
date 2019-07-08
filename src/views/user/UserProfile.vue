@@ -52,11 +52,39 @@ export default Vue.extend({
 
   computed: {
     listPostSummary() {
-      const arg: API.ListPostSummaryQueryVariables = {
-        owner: this.$props.user.id
-      };
-
-      return this.$Amplify.graphqlOperation(queries.listPostSummary, arg);
+      return this.$Amplify.graphqlOperation(
+        `query ListPostSummary($owner: String) {
+  listPostSummary(owner: $owner) {
+    id
+    title
+    description
+    updated_at
+    created_at
+    entity_type
+    entity {
+      ... on Share {
+        format
+        url
+      }
+      ... on Images {
+        images {
+          filetype
+          s3path
+        }
+      }
+    }
+    owner
+    owner_user {
+      id
+      name
+      picture
+      display_name
+    }
+  }
+}
+`,
+        { owner: this.$props.user.id }
+      );
     }
   },
 
