@@ -16,7 +16,10 @@
           v-if="user.id == me.id"
         >プロフィールを編集</b-button>
         <div class="notification">
-          <edit-user-profile :user="user" />
+          <edit-user-profile
+            :user="user"
+            @submitted="$snackbar.open('プロフィールが更新されました。反映には時間がかかります。')"
+          />
         </div>
       </b-collapse>
 
