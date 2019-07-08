@@ -46,7 +46,6 @@ img {
 }
 </style>
 
-
 <script lang="ts">
 import Vue from "vue";
 import OEmbedPreview from "../../components/OEmbedPreview.vue";

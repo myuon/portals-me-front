@@ -2,18 +2,13 @@
   <div class="columns">
     <div class="column is-half is-offset-one-quarter">
       <div class="box">
-        <create-post />
+        <create-post @reload="loadItems" />
       </div>
 
-      <amplify-connect :query="listPostSummary">
-        <template slot-scope="{ loading, data, errors }">
-          <template v-if="loading">Loading...</template>
-          <template v-else-if="errors.length > 0">{{ errors }}</template>
-          <template v-else-if="data">
-            <list-post :items="data.listPostSummary" />
-          </template>
-        </template>
-      </amplify-connect>
+      <template v-if="error">{{ error }}</template>
+      <template v-else-if="items.length > 0">
+        <list-post :items="items" />
+      </template>
     </div>
   </div>
 </template>
@@ -23,8 +18,16 @@ import Vue from "vue";
 import CreatePost from "./dashboard/CreatePost.vue";
 import ListPost from "./dashboard/ListPost.vue";
 import * as queries from "../graphql/queries";
+import { API, graphqlOperation } from "aws-amplify";
 
 export default Vue.extend({
+  data() {
+    return {
+      items: [],
+      error: null
+    };
+  },
+
   components: {
     CreatePost,
     ListPost
@@ -64,6 +67,22 @@ export default Vue.extend({
 }
 `);
     }
+  },
+
+  methods: {
+    async loadItems() {
+      try {
+        this.items = ((await API.graphql(
+          this.listPostSummary
+        )) as any).data.listPostSummary;
+      } catch (err) {
+        this.error = err;
+      }
+    }
+  },
+
+  async mounted() {
+    await this.loadItems();
   }
 });
 </script>

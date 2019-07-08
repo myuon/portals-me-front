@@ -23,13 +23,13 @@
 
     <b-collapse :open.sync="isShareOpen" aria-id="contentIdForA11y1">
       <div class="content">
-        <create-share />
+        <create-share @posted="$emit('reload')" />
       </div>
     </b-collapse>
 
     <b-collapse :open.sync="isImageOpen" aria-id="contentIdForA11y1">
       <div class="content">
-        <create-image />
+        <create-image @posted="$emit('reload')" />
       </div>
     </b-collapse>
   </div>

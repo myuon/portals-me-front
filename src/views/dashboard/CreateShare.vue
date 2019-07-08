@@ -6,18 +6,18 @@
       </template>
 
       <b-field label="タイトル">
-        <b-input v-model="title"/>
+        <b-input v-model="title" />
       </b-field>
 
       <b-field label="説明">
-        <b-input type="textarea" v-model="description"/>
+        <b-input type="textarea" v-model="description" />
       </b-field>
 
       <b-field label="URL">
-        <b-input v-model="url"/>
+        <b-input v-model="url" />
       </b-field>
 
-      <o-embed-preview :url="url"/>
+      <o-embed-preview :url="url" />
 
       <b-button type="is-tertiary" :disabled="loading" @click="mutate">投稿</b-button>
     </template>
@@ -65,6 +65,8 @@ export default Vue.extend({
       this.url = "";
 
       console.log("CreateShare finished");
+
+      this.$emit("posted");
     }
   }
 });

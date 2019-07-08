@@ -98,6 +98,8 @@ export default Vue.extend({
       this.dropFiles = [];
 
       console.log("Created image post");
+
+      this.$emit("posted");
     }
   }
 });
