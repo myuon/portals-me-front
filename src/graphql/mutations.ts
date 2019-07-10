@@ -61,3 +61,15 @@ export const generateUploadUrl = `mutation GenerateUploadUrl($keys: [String!]!) 
   generateUploadURL(keys: $keys)
 }
 `;
+export const followUser = `mutation FollowUser($targetId: String!) {
+  followUser(targetId: $targetId) {
+    id
+  }
+}
+`;
+export const unfollowUser = `mutation UnfollowUser($targetId: String!) {
+  unfollowUser(targetId: $targetId) {
+    id
+  }
+}
+`;

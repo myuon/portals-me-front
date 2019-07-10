@@ -91,6 +91,28 @@ export type GenerateUploadUrlMutation = {
   generateUploadURL: Array< string >,
 };
 
+export type FollowUserMutationVariables = {
+  targetId: string,
+};
+
+export type FollowUserMutation = {
+  followUser:  {
+    __typename: "IDWrapper",
+    id: string,
+  },
+};
+
+export type UnfollowUserMutationVariables = {
+  targetId: string,
+};
+
+export type UnfollowUserMutation = {
+  unfollowUser:  {
+    __typename: "IDWrapper",
+    id: string,
+  },
+};
+
 export type GetUserByNameQueryVariables = {
   name: string,
 };

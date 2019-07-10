@@ -39,9 +39,11 @@
 import Vue from "vue";
 import ListPost from "../dashboard/ListPost.vue";
 import * as queries from "../../graphql/queries";
-import * as API from "../../API";
+import * as mutations from "../../graphql/mutations";
+import * as APITypes from "../../API";
 import EditUserProfile from "./EditUserProfile.vue";
 import axios from "axios";
+import { API, graphqlOperation } from "aws-amplify";
 
 export default Vue.extend({
   props: ["user"],
@@ -97,7 +99,15 @@ export default Vue.extend({
   },
 
   methods: {
-    follow() {},
+    async follow() {
+      const result = await API.graphql(
+        graphqlOperation(mutations.followUser, {
+          targetId: this.user.id
+        })
+      );
+
+      console.log(JSON.stringify(result));
+    },
 
     async submit(form) {
       const token = localStorage.getItem("id_token");
