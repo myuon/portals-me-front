@@ -25,6 +25,9 @@ export const addSharePost = `mutation AddSharePost(
       name
       picture
       display_name
+      is_following
+      followings
+      followers
     }
   }
 }
@@ -53,6 +56,9 @@ export const addImagePost = `mutation AddImagePost(
       name
       picture
       display_name
+      is_following
+      followings
+      followers
     }
   }
 }

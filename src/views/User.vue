@@ -4,7 +4,7 @@
       <template slot-scope="{loading, data, errors}">
         <template v-if="loading">loading...</template>
         <template v-if="errors.length > 0">{{ errors }}</template>
-        <user-profile :user="data.getUserByName" v-if="data.getUserByName"/>
+        <user-profile :user="data.getUserMoreByName" v-if="data.getUserMoreByName" />
       </template>
     </amplify-connect>
   </div>
@@ -37,7 +37,7 @@ export default Vue.extend({
 
   computed: {
     getUser() {
-      return this.$Amplify.graphqlOperation(queries.getUserByName, {
+      return this.$Amplify.graphqlOperation(queries.getUserMoreByName, {
         name: this.$route.params.name
       });
     }

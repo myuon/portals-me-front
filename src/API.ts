@@ -45,6 +45,9 @@ export type AddSharePostMutation = {
       name: string,
       picture: string | null,
       display_name: string | null,
+      is_following: boolean | null,
+      followings: number | null,
+      followers: number | null,
     } | null,
   },
 };
@@ -79,6 +82,9 @@ export type AddImagePostMutation = {
       name: string,
       picture: string | null,
       display_name: string | null,
+      is_following: boolean | null,
+      followings: number | null,
+      followers: number | null,
     } | null,
   },
 };
@@ -124,6 +130,26 @@ export type GetUserByNameQuery = {
     name: string,
     picture: string | null,
     display_name: string | null,
+    is_following: boolean | null,
+    followings: number | null,
+    followers: number | null,
+  } | null,
+};
+
+export type GetUserMoreByNameQueryVariables = {
+  name: string,
+};
+
+export type GetUserMoreByNameQuery = {
+  getUserMoreByName:  {
+    __typename: "User",
+    id: string,
+    name: string,
+    picture: string | null,
+    display_name: string | null,
+    is_following: boolean | null,
+    followings: number | null,
+    followers: number | null,
   } | null,
 };
 
@@ -155,6 +181,9 @@ export type GetPostSummaryQuery = {
       name: string,
       picture: string | null,
       display_name: string | null,
+      is_following: boolean | null,
+      followings: number | null,
+      followers: number | null,
     } | null,
   },
 };
@@ -187,6 +216,9 @@ export type ListPostSummaryQuery = {
       name: string,
       picture: string | null,
       display_name: string | null,
+      is_following: boolean | null,
+      followings: number | null,
+      followers: number | null,
     } | null,
   } >,
 };

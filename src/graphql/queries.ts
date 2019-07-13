@@ -7,6 +7,21 @@ export const getUserByName = `query GetUserByName($name: String!) {
     name
     picture
     display_name
+    is_following
+    followings
+    followers
+  }
+}
+`;
+export const getUserMoreByName = `query GetUserMoreByName($name: String!) {
+  getUserMoreByName(name: $name) {
+    id
+    name
+    picture
+    display_name
+    is_following
+    followings
+    followers
   }
 }
 `;
@@ -30,6 +45,9 @@ export const getPostSummary = `query GetPostSummary($id: ID!) {
       name
       picture
       display_name
+      is_following
+      followings
+      followers
     }
   }
 }
@@ -54,6 +72,9 @@ export const listPostSummary = `query ListPostSummary($owner: String) {
       name
       picture
       display_name
+      is_following
+      followings
+      followers
     }
   }
 }

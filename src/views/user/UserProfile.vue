@@ -20,7 +20,9 @@
         </div>
       </b-collapse>
 
-      <b-button @click="follow" v-if="user.id != me.id">このユーザーをフォロー</b-button>
+      <b-button @click="follow" v-if="user.id != me.id && !user.is_following">このユーザーをフォロー</b-button>
+
+      <p>フォロー {{ user.followings }} / フォロワー {{ user.followers }}</p>
 
       <amplify-connect :query="listPostSummary">
         <template slot-scope="{ loading, data, errors }">
