@@ -109,6 +109,7 @@ export default Vue.extend({
       );
 
       console.log(JSON.stringify(result));
+      location.reload();
     },
 
     async submit(form) {
