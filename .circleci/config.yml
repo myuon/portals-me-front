@@ -6,13 +6,17 @@ orbs:
 
 jobs:
   prebuild:
+    parameters:
+      env:
+        type: enum
+        enum: ["stg", "prod"]
     working_directory: ~/workspace
     executor: aws-cli/default
     steps:
       - checkout
       - aws-cli/install
       - run: sudo apt update && sudo apt install -y jq
-      - run: aws ssm get-parameter --name portals-me-client-stg-env --with-decryption --region ap-northeast-1 | jq -r '.Parameter.Value' > .env.production
+      - run: aws ssm get-parameter --name portals-me-client-<< parameters.env >>-env --with-decryption --region ap-northeast-1 | jq -r '.Parameter.Value' > .env.production
       - persist_to_workspace:
           root: .
           paths:
@@ -31,6 +35,9 @@ jobs:
           paths:
             - .
   deploy:
+    parameters:
+      bucket:
+        type: string
     working_directory: ~/workspace
     executor: aws-cli/default
     steps:
@@ -39,7 +46,7 @@ jobs:
       - aws-cli/install
       - aws-s3/sync:
           from: dist
-          to: "s3://portals-me-stg/"
+          to: "s3://<< parameters.bucket >>/"
           arguments: --acl public-read
           overwrite: true
 
@@ -47,11 +54,13 @@ workflows:
   version: 2
   deploy:
     jobs:
+      # stg jobs
       - prebuild:
           filters:
             branches:
               only: master
           context: aws
+          env: stg
       - build:
           requires:
             - prebuild
@@ -59,3 +68,4 @@ workflows:
           requires:
             - build
           context: aws
+          bucket: portals-me-stg
