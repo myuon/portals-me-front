@@ -76,13 +76,9 @@ export default Vue.extend({
 
   methods: {
     async toDashboard(token: string) {
-      localStorage.setItem("id_token", token);
-      localStorage.setItem(
-        "user",
-        decodeURIComponent(
-          escape(atob(JSON.parse(atob(token.split(".")[1])).data))
-        )
-      );
+      this.$store.dispatch("authenticate", {
+        token
+      });
       this.$router.push("/dashboard");
     },
     async signUpWithGoogle() {

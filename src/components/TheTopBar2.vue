@@ -46,10 +46,7 @@ import * as jwt from "../lib/jwt";
 
 export default Vue.extend({
   data() {
-    return {
-      user: null as User | null,
-      token: null
-    };
+    return {};
   },
 
   computed: {
@@ -58,17 +55,17 @@ export default Vue.extend({
     },
 
     authenticated() {
-      console.log(!!this.token && jwt.validateExp(this.token));
+      return !!this.user;
+    },
 
-      return !!this.token && jwt.validateExp(this.token);
+    user() {
+      return this.$store.state.user;
     }
   },
 
   methods: {
     async signOut() {
-      localStorage.setItem("id_token", "");
-      localStorage.setItem("user", "{}");
-      this.user = null;
+      this.$store.dispatch("unauthenticate");
       this.$router.push("/");
     },
     toggleDrawer() {
@@ -77,23 +74,13 @@ export default Vue.extend({
   },
 
   async mounted() {
-    const token = localStorage.getItem("id_token");
-    if (!token) return;
+    this.$store.dispatch("authenticate");
 
-    this.token = localStorage.getItem("id_token");
+    //    const needAuth = (str: string) => str.match(/^\/collections\/(.*)/);
 
-    try {
-      this.user = JSON.parse(localStorage.getItem("user") || "");
-    } catch (e) {
-      console.error(e);
-      this.user = null;
-    }
-
-    const needAuth = (str: string) => str.match(/^\/collections\/(.*)/);
-
-    if (!this.user && !needAuth(this.$route.path)) {
-      this.$router.push("/");
-    }
+    //    if (!this.user && !needAuth(this.$route.path)) {
+    //      this.$router.push("/");
+    //    }
   }
 });
 </script>
