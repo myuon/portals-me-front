@@ -16,6 +16,10 @@ import store from "./store";
 Vue.use(Router);
 
 const requireAuth = (to, from, next) => {
+  if (!store.getters.isAuthenticated) {
+    store.dispatch("authenticate");
+  }
+
   if (store.getters.isAuthenticated) {
     next();
   } else {
