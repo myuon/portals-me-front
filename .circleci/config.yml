@@ -52,9 +52,8 @@ jobs:
 
 workflows:
   version: 2
-  deploy:
+  stg:
     jobs:
-      # stg jobs
       - prebuild:
           filters:
             branches:
@@ -69,3 +68,31 @@ workflows:
             - build
           context: aws
           bucket: portals-me-stg
+  prod:
+    jobs:
+      - prebuild:
+          filters:
+            tags:
+              only: /^release-.*/
+            branches:
+              ignore: /.*/
+          context: aws
+          env: stg
+      - build:
+          filters:
+            tags:
+              only: /^release-.*/
+            branches:
+              ignore: /.*/
+          requires:
+            - prebuild
+      - deploy:
+          filters:
+            tags:
+              only: /^release-.*/
+            branches:
+              ignore: /.*/
+          requires:
+            - build
+          context: aws
+          bucket: portals-me
