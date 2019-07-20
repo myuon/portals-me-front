@@ -46,11 +46,7 @@ export default Vue.extend({
       );
       const token = await result.text();
 
-      localStorage.setItem("id_token", token);
-      localStorage.setItem(
-        "user",
-        atob(JSON.parse(atob(token.split(".")[1])).data)
-      );
+      this.$store.dispatch("authenticate", { token });
       this.$router.push("/dashboard");
     }
   }
