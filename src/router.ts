@@ -2,8 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 
 import SideBar from "@/components/TheSideBar.vue";
-import UnsignedTopBar from "@/components/TheUnsignedTopBar.vue";
-import TopBar from "@/components/TheTopBar2.vue";
+import TopBar from "@/components/TheTopBar.vue";
 
 import Landing from "@/views/Landing.vue";
 import Dashboard from "@/views/Dashboard.vue";
