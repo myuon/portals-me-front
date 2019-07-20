@@ -92,7 +92,8 @@ export default new Router({
       components: {
         default: User,
         topbar: TopBar
-      }
+      },
+      beforeEnter: requireAuth
     }
   ]
 });
