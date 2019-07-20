@@ -77,7 +77,7 @@ workflows:
             branches:
               ignore: /.*/
           context: aws
-          env: stg
+          env: prod
       - build:
           filters:
             tags:
