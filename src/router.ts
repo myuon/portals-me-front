@@ -2,7 +2,6 @@ import Vue from "vue";
 import Router from "vue-router";
 
 import SideBar from "@/components/TheSideBar.vue";
-import UnsignedTopBar from "@/components/TheUnsignedTopBar.vue";
 import TopBar from "@/components/TheTopBar.vue";
 
 import Landing from "@/views/Landing.vue";
@@ -12,7 +11,17 @@ import SignUp from "@/views/SignUp.vue";
 import User from "@/views/User.vue";
 import PasswordForm from "@/views/PasswordForm.vue";
 
+import store from "./store";
+
 Vue.use(Router);
+
+const requireAuth = (to, from, next) => {
+  if (store.getters.isAuthenticated) {
+    next();
+  } else {
+    next("/");
+  }
+};
 
 export default new Router({
   mode: "history",
@@ -23,7 +32,7 @@ export default new Router({
       name: "landing",
       components: {
         default: Landing,
-        topbar: UnsignedTopBar
+        topbar: TopBar
       }
     },
     {
@@ -31,7 +40,7 @@ export default new Router({
       name: "signup",
       components: {
         default: SignUp,
-        topbar: UnsignedTopBar
+        topbar: TopBar
       }
     },
     {
@@ -39,7 +48,7 @@ export default new Router({
       name: "signup-twitter-callback",
       components: {
         default: SignUp,
-        topbar: UnsignedTopBar
+        topbar: TopBar
       }
     },
     {
@@ -47,7 +56,7 @@ export default new Router({
       name: "signin",
       components: {
         default: SignIn,
-        topbar: UnsignedTopBar
+        topbar: TopBar
       }
     },
     {
@@ -55,7 +64,7 @@ export default new Router({
       name: "signin-password",
       components: {
         default: PasswordForm,
-        topbar: UnsignedTopBar
+        topbar: TopBar
       }
     },
     {
@@ -63,7 +72,7 @@ export default new Router({
       name: "signin-twitter-callback",
       components: {
         default: SignIn,
-        topbar: UnsignedTopBar
+        topbar: TopBar
       }
     },
     {
@@ -73,7 +82,8 @@ export default new Router({
         default: Dashboard,
         sidebar: SideBar,
         topbar: TopBar
-      }
+      },
+      beforeEnter: requireAuth
     },
     {
       path: "/users/:name",
@@ -81,7 +91,8 @@ export default new Router({
       components: {
         default: User,
         topbar: TopBar
-      }
+      },
+      beforeEnter: requireAuth
     }
   ]
 });

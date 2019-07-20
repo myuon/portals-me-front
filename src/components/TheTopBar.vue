@@ -1,9 +1,17 @@
 <template>
   <div>
-    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+    <nav
+      class="navbar"
+      :class="{ 'is-primary': authenticated }"
+      role="navigation"
+      aria-label="main navigation"
+    >
       <div class="navbar-brand">
         <div class="navbar-item brand-title">
-          <router-link to="/dashboard" style="color: #fff;">Portals@me</router-link>
+          <router-link
+            :to="authenticated ? '/dashboard' : '/'"
+            :style="authenticated ? { color: '#fff' } : {}"
+          >Portals@me</router-link>
         </div>
       </div>
 
@@ -12,10 +20,10 @@
           <div class="navbar-item" v-if="isDev">
             <span class="tag is-danger">development</span>
           </div>
-          <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-item has-dropdown is-hoverable" :v-if="authenticated">
             <a class="navbar-link" v-if="user">
               <figure class="image is-32x32">
-                <img class="is-rounded" :src="user.picture">
+                <img class="is-rounded" :src="user.picture" />
               </figure>
               {{ user.display_name }}
             </a>
@@ -34,52 +42,40 @@
 <script lang="ts">
 import Vue from "vue";
 import { User } from "../views/User.vue";
+import * as jwt from "../lib/jwt";
 
 export default Vue.extend({
   data() {
-    return {
-      user: null as User | null
-    };
+    return {};
   },
 
   computed: {
     isDev() {
       return process.env.NODE_ENV === "development";
+    },
+
+    authenticated() {
+      return !!this.user;
+    },
+
+    user() {
+      return this.$store.state.user;
     }
   },
 
   methods: {
     async signOut() {
-      localStorage.setItem("id_token", "");
-      localStorage.setItem("user", "{}");
-      this.user = null;
+      this.$store.dispatch("unauthenticate");
       this.$router.push("/");
     },
     toggleDrawer() {
       this.$store.commit("toggleDrawer");
     }
   },
+
   async mounted() {
-    try {
-      this.user = JSON.parse(localStorage.getItem("user") || "");
-    } catch (e) {
-      console.error(e);
-      this.user = null;
-    }
-
-    const needAuth = (str: string) => str.match(/^\/collections\/(.*)/);
-
-    if (!this.user && !needAuth(this.$route.path)) {
-      this.$router.push("/");
-    }
+    this.$store.dispatch("authenticate");
   }
 });
 </script>
-
-<style scoped>
-.brand-title {
-  font-size: larger;
-  font-weight: bold;
-}
-</style>
 

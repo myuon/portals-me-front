@@ -6,7 +6,9 @@ import store from "@/store";
 import Amplify, * as AmplifyModules from "aws-amplify";
 import { AmplifyPlugin } from "aws-amplify-vue";
 const GAuth = require("vue-google-oauth2").default;
+import Vuex from "vuex";
 
+Vue.use(Vuex);
 Vue.use(Buefy);
 Vue.use(GAuth, {
   clientId:
