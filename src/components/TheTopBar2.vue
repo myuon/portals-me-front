@@ -75,12 +75,6 @@ export default Vue.extend({
 
   async mounted() {
     this.$store.dispatch("authenticate");
-
-    //    const needAuth = (str: string) => str.match(/^\/collections\/(.*)/);
-
-    //    if (!this.user && !needAuth(this.$route.path)) {
-    //      this.$router.push("/");
-    //    }
   }
 });
 </script>

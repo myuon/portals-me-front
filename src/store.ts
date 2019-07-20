@@ -13,7 +13,11 @@ const state: State = {
   user: null
 };
 
-const getters: GetterTree<State, State> = {};
+const getters: GetterTree<State, State> = {
+  isAuthenticated: state => {
+    return !!state.token && !!state.user;
+  }
+};
 
 const mutations: MutationTree<State> = {
   loadToken(state) {

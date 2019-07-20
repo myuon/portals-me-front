@@ -12,7 +12,17 @@ import SignUp from "@/views/SignUp.vue";
 import User from "@/views/User.vue";
 import PasswordForm from "@/views/PasswordForm.vue";
 
+import store from "./store";
+
 Vue.use(Router);
+
+const requireAuth = (to, from, next) => {
+  if (store.getters.isAuthenticated) {
+    next();
+  } else {
+    next("/");
+  }
+};
 
 export default new Router({
   mode: "history",
@@ -73,7 +83,8 @@ export default new Router({
         default: Dashboard,
         sidebar: SideBar,
         topbar: TopBar
-      }
+      },
+      beforeEnter: requireAuth
     },
     {
       path: "/users/:name",
