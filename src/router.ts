@@ -3,7 +3,7 @@ import Router from "vue-router";
 
 import SideBar from "@/components/TheSideBar.vue";
 import UnsignedTopBar from "@/components/TheUnsignedTopBar.vue";
-import TopBar from "@/components/TheTopBar.vue";
+import TopBar from "@/components/TheTopBar2.vue";
 
 import Landing from "@/views/Landing.vue";
 import Dashboard from "@/views/Dashboard.vue";
@@ -23,7 +23,7 @@ export default new Router({
       name: "landing",
       components: {
         default: Landing,
-        topbar: UnsignedTopBar
+        topbar: TopBar
       }
     },
     {
@@ -31,7 +31,7 @@ export default new Router({
       name: "signup",
       components: {
         default: SignUp,
-        topbar: UnsignedTopBar
+        topbar: TopBar
       }
     },
     {
@@ -39,7 +39,7 @@ export default new Router({
       name: "signup-twitter-callback",
       components: {
         default: SignUp,
-        topbar: UnsignedTopBar
+        topbar: TopBar
       }
     },
     {
@@ -47,7 +47,7 @@ export default new Router({
       name: "signin",
       components: {
         default: SignIn,
-        topbar: UnsignedTopBar
+        topbar: TopBar
       }
     },
     {
@@ -55,7 +55,7 @@ export default new Router({
       name: "signin-password",
       components: {
         default: PasswordForm,
-        topbar: UnsignedTopBar
+        topbar: TopBar
       }
     },
     {
@@ -63,7 +63,7 @@ export default new Router({
       name: "signin-twitter-callback",
       components: {
         default: SignIn,
-        topbar: UnsignedTopBar
+        topbar: TopBar
       }
     },
     {
