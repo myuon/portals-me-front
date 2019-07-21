@@ -38,6 +38,10 @@ export const getPostSummary = `query GetPostSummary($id: ID!) {
         format
         url
       }
+      ... on Article {
+        filetype
+        s3path
+      }
     }
     owner
     owner_user {
@@ -64,6 +68,10 @@ export const listPostSummary = `query ListPostSummary($owner: String) {
       ... on Share {
         format
         url
+      }
+      ... on Article {
+        filetype
+        s3path
       }
     }
     owner

@@ -23,7 +23,6 @@ import * as mutations from "../../graphql/mutations";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 import * as APITypes from "../../API";
 import { GraphQLResult } from "@aws-amplify/api/lib/types";
-import debounce from "debounce";
 import marked from "marked";
 
 export default Vue.extend({
@@ -41,7 +40,38 @@ export default Vue.extend({
   },
 
   methods: {
-    submit() {}
+    async submit() {
+      const filename = `${new Date().getTime()}.md`;
+      const urls = ((await API.graphql(
+        graphqlOperation(mutations.generateUploadUrl, {
+          keys: filename
+        })
+      )) as any).data.generateUploadURL;
+
+      const articlePostInput: APITypes.AddArticlePostMutationVariables = {
+        title: this.title || null,
+        entity: {
+          filetype: "markdown",
+          s3path: filename
+        }
+      };
+
+      await API.graphql(
+        graphqlOperation(mutations.addArticlePost, articlePostInput)
+      );
+      await axios.put(urls[0], this.input);
+
+      this.onCreateFinished();
+    },
+
+    onCreateFinished() {
+      this.title = "";
+      this.input = "";
+
+      console.log("Created article post");
+
+      this.$emit("posted");
+    }
   }
 });
 </script>

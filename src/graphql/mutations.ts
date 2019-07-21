@@ -18,6 +18,10 @@ export const addSharePost = `mutation AddSharePost(
         format
         url
       }
+      ... on Article {
+        filetype
+        s3path
+      }
     }
     owner
     owner_user {
@@ -48,6 +52,41 @@ export const addImagePost = `mutation AddImagePost(
       ... on Share {
         format
         url
+      }
+      ... on Article {
+        filetype
+        s3path
+      }
+    }
+    owner
+    owner_user {
+      id
+      name
+      picture
+      display_name
+      is_following
+      followings
+      followers
+    }
+  }
+}
+`;
+export const addArticlePost = `mutation AddArticlePost($title: String, $entity: ArticleInput!) {
+  addArticlePost(title: $title, entity: $entity) {
+    id
+    title
+    description
+    updated_at
+    created_at
+    entity_type
+    entity {
+      ... on Share {
+        format
+        url
+      }
+      ... on Article {
+        filetype
+        s3path
       }
     }
     owner
