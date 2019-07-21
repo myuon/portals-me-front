@@ -33,6 +33,9 @@
                 <img :src="`${filesURL}/${item.owner}/${image.s3path}`" />
               </figure>
             </div>
+            <div v-else-if="item.entity_type == 'Article'">
+              <markdown-viewer :url="`${filesURL}/${item.owner}/${item.entity.s3path}`" />
+            </div>
           </div>
         </div>
       </div>
@@ -49,13 +52,15 @@ img {
 <script lang="ts">
 import Vue from "vue";
 import OEmbedPreview from "../../components/OEmbedPreview.vue";
+import MarkdownViewer from "../../components/MarkdownViewer.vue";
 import * as API from "../../API";
 
 export default Vue.extend({
   props: ["items"],
 
   components: {
-    OEmbedPreview
+    OEmbedPreview,
+    MarkdownViewer
   },
 
   computed: {
