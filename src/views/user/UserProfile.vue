@@ -77,6 +77,10 @@ export default Vue.extend({
           s3path
         }
       }
+      ... on Article {
+        filetype
+        s3path
+      }
     }
     owner
     owner_user {
