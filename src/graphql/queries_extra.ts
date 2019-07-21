@@ -1,4 +1,4 @@
-export const ListPostSummary = `query ListPostSummary($owner: String) {
+export const ListPostSummary = `query ListPostSummaryExtra($owner: String) {
   listPostSummary(owner: $owner) {
     id
     title

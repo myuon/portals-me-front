@@ -172,6 +172,47 @@ export type UnfollowUserMutation = {
   },
 };
 
+export type ListPostSummaryExtraQueryVariables = {
+  owner?: string | null,
+};
+
+export type ListPostSummaryExtraQuery = {
+  listPostSummary:  Array< {
+    __typename: "PostSummary",
+    id: string,
+    title: string | null,
+    description: string | null,
+    updated_at: string,
+    created_at: string,
+    entity_type: string,
+    entity: ( {
+        __typename: "Share",
+        format: string,
+        url: string,
+      } | {
+        __typename: "Images",
+        images:  Array< {
+          __typename: string,
+          filetype: string,
+          s3path: string,
+        } >,
+      } | {
+        __typename: "Article",
+        filetype: string | null,
+        s3path: string,
+      }
+    ),
+    owner: string,
+    owner_user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      picture: string | null,
+      display_name: string | null,
+    } | null,
+  } >,
+};
+
 export type GetUserByNameQueryVariables = {
   name: string,
 };
