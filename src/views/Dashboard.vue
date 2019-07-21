@@ -18,6 +18,7 @@ import Vue from "vue";
 import CreatePost from "./dashboard/CreatePost.vue";
 import ListPost from "./dashboard/ListPost.vue";
 import * as queries from "../graphql/queries";
+import * as queries_extra from "../graphql/queries_extra";
 import { API, graphqlOperation } from "aws-amplify";
 
 export default Vue.extend({
@@ -35,41 +36,7 @@ export default Vue.extend({
 
   computed: {
     listPostSummary() {
-      return this.$Amplify
-        .graphqlOperation(`query ListPostSummary($owner: String) {
-  listPostSummary(owner: $owner) {
-    id
-    title
-    description
-    updated_at
-    created_at
-    entity_type
-    entity {
-      ... on Share {
-        format
-        url
-      }
-      ... on Images {
-        images {
-          filetype
-          s3path
-        }
-      }
-      ... on Article {
-        filetype
-        s3path
-      }
-    }
-    owner
-    owner_user {
-      id
-      name
-      picture
-      display_name
-    }
-  }
-}
-`);
+      return this.$Amplify.graphqlOperation(queries_extra.ListPostSummary);
     }
   },
 

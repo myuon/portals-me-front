@@ -42,6 +42,7 @@ import Vue from "vue";
 import ListPost from "../dashboard/ListPost.vue";
 import * as queries from "../../graphql/queries";
 import * as mutations from "../../graphql/mutations";
+import * as queries_extra from "../../graphql/queries_extra";
 import * as APITypes from "../../API";
 import EditUserProfile from "./EditUserProfile.vue";
 import axios from "axios";
@@ -57,43 +58,9 @@ export default Vue.extend({
 
   computed: {
     listPostSummary() {
-      return this.$Amplify.graphqlOperation(
-        `query ListPostSummary($owner: String) {
-  listPostSummary(owner: $owner) {
-    id
-    title
-    description
-    updated_at
-    created_at
-    entity_type
-    entity {
-      ... on Share {
-        format
-        url
-      }
-      ... on Images {
-        images {
-          filetype
-          s3path
-        }
-      }
-      ... on Article {
-        filetype
-        s3path
-      }
-    }
-    owner
-    owner_user {
-      id
-      name
-      picture
-      display_name
-    }
-  }
-}
-`,
-        { owner: this.$props.user.id }
-      );
+      return this.$Amplify.graphqlOperation(queries_extra.ListPostSummary, {
+        owner: this.$props.user.id
+      });
     }
   },
 
