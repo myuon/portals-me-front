@@ -19,6 +19,15 @@
         @click="open('image')"
         :active="openTab == 'image'"
       />
+      <icon-button
+        icon="notebook"
+        label="記事"
+        slot="trigger"
+        aria-controls="contentIdForAlly1"
+        style="margin: 10px"
+        @click="open('text')"
+        :active="openTab == 'text'"
+      />
     </div>
 
     <b-collapse :open.sync="isShareOpen" aria-id="contentIdForA11y1">
@@ -32,6 +41,12 @@
         <create-image @posted="$emit('reload')" />
       </div>
     </b-collapse>
+
+    <b-collapse :open.sync="isTextOpen" aria-id="contentIdForA11y1">
+      <div class="content">
+        <create-text @posted="$emit('reload')" />
+      </div>
+    </b-collapse>
   </div>
 </template>
 
@@ -39,6 +54,7 @@
 import Vue from "vue";
 import CreateShare from "./CreateShare.vue";
 import CreateImage from "./CreateImage.vue";
+import CreateText from "./CreateText.vue";
 import * as API from "../../API";
 import * as mutations from "../../graphql/mutations";
 import * as queries from "../../graphql/queries";
@@ -48,6 +64,7 @@ export default Vue.extend({
   components: {
     CreateShare,
     CreateImage,
+    CreateText,
     IconButton
   },
 
@@ -65,6 +82,9 @@ export default Vue.extend({
     },
     isImageOpen() {
       return this.openTab == "image";
+    },
+    isTextOpen() {
+      return this.openTab == "text";
     }
   },
 
