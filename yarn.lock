@@ -8473,10 +8473,10 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.0.tgz#bd76d6a23323e2ca8ffa12028dc04559c75f9019"
   integrity sha512-iq+S7vZJE60yejDYM0ek6zg308+UZsdtPExWP9VZoCFCz1zkJoXFnAX7aZfd/ZwrkidzdUZL0C/ryW+JwAiIGw==
 
-vue-google-oauth2@^1.3.3:
-  version "1.3.8"
-  resolved "https://registry.yarnpkg.com/vue-google-oauth2/-/vue-google-oauth2-1.3.8.tgz#73a832741b93c698010e92ab97457758d52321e2"
-  integrity sha512-z3dxZi2ezjW5sAiZ68gbt0Wke4nOxEFBoFW1McROVJ0tcT+s/6ihZL9LkIkfnb1Gah+oTBfYlYJb4HZjYTrYUA==
+vue-google-oauth2@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/vue-google-oauth2/-/vue-google-oauth2-1.4.0.tgz#080744d18126e8fd37879238830382ee3f8ccd3c"
+  integrity sha512-VVajnQxOstZqWzrVdf5F5D415JSzIdkdqOJR375tX9yvuXodsJm1H/thffn41UlSRC856e9vPqc21AQoIiQYLw==
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.3"
