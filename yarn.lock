@@ -868,10 +868,10 @@ autoprefixer@^9.5.1:
     postcss "^7.0.16"
     postcss-value-parser "^3.3.1"
 
-aws-amplify-vue@^0.2.11:
-  version "0.2.11"
-  resolved "https://registry.yarnpkg.com/aws-amplify-vue/-/aws-amplify-vue-0.2.11.tgz#31e2e430a47dba639e6763480a9f494e638f13db"
-  integrity sha512-V777dHjwbZ/dB+wZ/MbU13aUZ9KuGfuZ7mRDUtwZK7nSN+kaO5kx/N72k96U3G5ozrZE8E1Hx26gWbaMqn/IqQ==
+aws-amplify-vue@^0.2.13:
+  version "0.2.13"
+  resolved "https://registry.yarnpkg.com/aws-amplify-vue/-/aws-amplify-vue-0.2.13.tgz#798bac0cfeeca2f9a3af7ed8f886fd01a4bd0f87"
+  integrity sha512-3YFkcVH4Hm+4wIelxJDudCt1VaL/j1bwy0d6z4j8YMfqLUS12KG1bSEoit2YBWjmnb89VQFdCnJOuBoq1/Y7Lg==
   dependencies:
     lodash.orderby "^4.6.0"
     qrcode.vue "^1.6.0"
