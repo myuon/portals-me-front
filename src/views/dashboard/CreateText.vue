@@ -44,7 +44,7 @@ export default Vue.extend({
       const filename = `${new Date().getTime()}.md`;
       const urls = ((await API.graphql(
         graphqlOperation(mutations.generateUploadUrl, {
-          keys: filename
+          keys: [filename]
         })
       )) as any).data.generateUploadURL;
 
