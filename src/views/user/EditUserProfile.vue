@@ -16,7 +16,17 @@
       <img class="is-rounded" :src="form.picture" />
     </figure>
 
-    <b-button type="is-success" @click="$emit('submit', form)">送信</b-button>
+    <b-field class="file">
+      <b-upload v-model="iconFile">
+        <a class="button is-primary">
+          <b-icon icon="upload"></b-icon>
+          <span>アイコンをアップロード</span>
+        </a>
+      </b-upload>
+      <span class="file-name" v-if="iconFile">{{ iconFile.name }}</span>
+    </b-field>
+
+    <b-button type="is-success" @click="$emit('submit', form, iconFile)">送信</b-button>
     <b-button @click="$emit('cancel')">キャンセル</b-button>
   </section>
 </template>
@@ -36,7 +46,8 @@ export default Vue.extend({
         picture: this.user.picture
       },
       nameUniqueness: null,
-      originalName: this.user.name
+      originalName: this.user.name,
+      iconFile: null
     };
   },
 

@@ -83,8 +83,20 @@ export default Vue.extend({
       location.reload();
     },
 
-    async submit(form) {
+    async submit(form, iconFile) {
       const token = localStorage.getItem("id_token");
+
+      if (iconFile) {
+        const filename = `icon/${iconFile.name}`;
+        const url = ((await API.graphql(
+          graphqlOperation(mutations.generateUploadUrl, {
+            keys: [filename]
+          })
+        )) as any).data.generateUploadURL[0];
+        await axios.put(url, iconFile);
+
+        form.picture = `${process.env.VUE_APP_FILES_URL}/${this.$store.state.user.id}/${filename}`;
+      }
 
       await axios.put(`${process.env.VUE_APP_AUTH_API_ENDPOINT}/self`, form, {
         headers: {
