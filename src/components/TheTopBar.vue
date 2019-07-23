@@ -22,8 +22,8 @@
           </div>
           <div class="navbar-item has-dropdown is-hoverable" :v-if="authenticated">
             <a class="navbar-link" v-if="user">
-              <figure class="image is-32x32">
-                <img class="is-rounded" :src="user.picture" />
+              <figure class="image is-32x32" style="margin-right: 0.3em;">
+                <img class="is-rounded topbar-avatar" :src="user.picture" />
               </figure>
               {{ user.display_name }}
             </a>
@@ -38,6 +38,13 @@
     </nav>
   </div>
 </template>
+
+<style scoped>
+.image img.topbar-avatar {
+  max-height: 100%;
+}
+</style>
+
 
 <script lang="ts">
 import Vue from "vue";
