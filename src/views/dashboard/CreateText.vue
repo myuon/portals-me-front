@@ -1,18 +1,18 @@
 <template>
   <div>
     <b-field label="タイトル">
-      <b-input v-model="title" />
+      <b-input data-cy="article-title" v-model="title" />
     </b-field>
 
     <b-field label="本文 (markdownが使えます)">
-      <b-input v-model="input" type="textarea"></b-input>
+      <b-input data-cy="article-content" v-model="input" type="textarea"></b-input>
     </b-field>
 
     <div class="notification">
       <div v-html="markdown"></div>
     </div>
 
-    <b-button type="is-tertiary" @click="submit">投稿</b-button>
+    <b-button data-cy="submit" type="is-tertiary" @click="submit">投稿</b-button>
   </div>
 </template>
 

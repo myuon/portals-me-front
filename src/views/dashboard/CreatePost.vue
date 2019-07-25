@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="create-post">
     <div style="text-align: center;">
       <icon-button
         icon="share"
@@ -27,6 +27,7 @@
         style="margin: 10px"
         @click="open('text')"
         :active="openTab == 'text'"
+        data-cy="open-article"
       />
     </div>
 

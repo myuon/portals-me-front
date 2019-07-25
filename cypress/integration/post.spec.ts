@@ -53,7 +53,21 @@ describe("Post", () => {
     cy.visit("/dashboard");
   });
 
-  it("should do sth", () => {
-    expect(true).to.eq(false);
+  it("should post an article", () => {
+    cy.get("#create-post").within($elem => {
+      cy.get('[data-cy="open-article"]').click();
+      cy.get('[data-cy="article-title"]').type(
+        `Test - ${new Date().toDateString()}`
+      );
+      cy.get('[data-cy="article-content"]').type(`# Hello World
+
+This is a sentence.
+
+- a
+- b
+- c
+`);
+      cy.get('[data-cy="submit"]').click();
+    });
   });
 });
