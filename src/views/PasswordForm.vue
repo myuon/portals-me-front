@@ -1,16 +1,16 @@
 <template>
-  <div class="container">
+  <div id="password-form" class="container">
     <div class="columns is-centered">
       <div class="column is-one-quarter">
         <b-field label="user_name">
-          <b-input v-model="user_name" />
+          <b-input data-cy="user-name" v-model="user_name" />
         </b-field>
 
         <b-field label="password">
-          <b-input v-model="password" password-reveal />
+          <b-input data-cy="password" v-model="password" password-reveal />
         </b-field>
 
-        <b-button type="is-primary" @click="submit">Submit</b-button>
+        <b-button data-cy="submit" type="is-primary" @click="submit">Submit</b-button>
       </div>
     </div>
   </div>

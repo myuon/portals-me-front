@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="the-topbar">
     <nav
       class="navbar"
       :class="{ 'is-primary': authenticated }"
@@ -21,7 +21,7 @@
             <span class="tag is-danger">development</span>
           </div>
           <div class="navbar-item has-dropdown is-hoverable" :v-if="authenticated">
-            <a class="navbar-link" v-if="user">
+            <a class="navbar-link" v-if="user" data-cy="signed-user">
               <figure class="image is-32x32" style="margin-right: 0.3em;">
                 <img class="is-rounded topbar-avatar" :src="user.picture" />
               </figure>
