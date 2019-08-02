@@ -35,8 +35,8 @@ export default Vue.extend({
   },
 
   computed: {
-    listPostSummary() {
-      return this.$Amplify.graphqlOperation(queries_extra.ListPostSummary);
+    fetchTimeline() {
+      return this.$Amplify.graphqlOperation(queries_extra.FetchTimeline);
     }
   },
 
@@ -44,8 +44,8 @@ export default Vue.extend({
     async loadItems() {
       try {
         this.items = ((await API.graphql(
-          this.listPostSummary
-        )) as any).data.listPostSummary;
+          this.fetchTimeline
+        )) as any).data.fetchTimeline;
       } catch (err) {
         this.error = err;
       }

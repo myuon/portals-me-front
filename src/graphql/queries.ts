@@ -87,3 +87,34 @@ export const listPostSummary = `query ListPostSummary($owner: String) {
   }
 }
 `;
+export const fetchTimeline = `query FetchTimeline($since: Float) {
+  fetchTimeline(since: $since) {
+    id
+    title
+    description
+    updated_at
+    created_at
+    entity_type
+    entity {
+      ... on Share {
+        format
+        url
+      }
+      ... on Article {
+        filetype
+        s3path
+      }
+    }
+    owner
+    owner_user {
+      id
+      name
+      picture
+      display_name
+      is_following
+      followings
+      followers
+    }
+  }
+}
+`;

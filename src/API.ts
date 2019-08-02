@@ -324,3 +324,42 @@ export type ListPostSummaryQuery = {
     } | null,
   } >,
 };
+
+export type FetchTimelineQueryVariables = {
+  since?: number | null,
+};
+
+export type FetchTimelineQuery = {
+  fetchTimeline:  Array< {
+    __typename: "PostSummary",
+    id: string,
+    title: string | null,
+    description: string | null,
+    updated_at: string,
+    created_at: string,
+    entity_type: string,
+    entity: ( {
+        __typename: "Share",
+        format: string,
+        url: string,
+      } | {
+        __typename: "Images",
+      } | {
+        __typename: "Article",
+        filetype: string | null,
+        s3path: string,
+      }
+    ),
+    owner: string,
+    owner_user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      picture: string | null,
+      display_name: string | null,
+      is_following: boolean | null,
+      followings: number | null,
+      followers: number | null,
+    } | null,
+  } >,
+};
