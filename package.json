@@ -37,7 +37,7 @@
     "sass-loader": "^7.3.1",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.3.0",
-    "typescript": "^3.5.3",
+    "typescript": "^3.6.2",
     "vue-template-compiler": "^2.6.10"
   },
   "postcss": {
